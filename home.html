@@ -9,134 +9,311 @@
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root{
+      --bg: #ffffff;
+      --ink: #111;
+      --muted: #666;
+      --padY: 26px;   /* spacing above/below marquee */
     }
 
     html, body {
       height: 100vh;
-      overflow: hidden;
-      background: #faf8f5;
-      font-family: serif;
+      overflow: hidden;      /* no scroll */
+      background: var(--bg);
     }
 
     body {
       display: flex;
       flex-direction: column;
+      color: var(--ink);
+      font-family: serif;
     }
 
     /* ===== HEADER ===== */
-    header {
+    header{
       text-align: center;
-      padding: 20px 16px 12px;
-      flex-shrink: 0;
+      padding: 26px 16px 16px;
+      flex: 0 0 auto;
+      background: var(--bg);
     }
 
-    header h1 {
-      font-family: 'Alex Brush', cursive;
-      font-size: 48px;
-      font-weight: normal;
-      margin-bottom: 6px;
+    .names{
+      font-family: "Alex Brush", cursive;
+      font-size: clamp(36px, 6vw, 54px);
+      font-weight: 400;
+      line-height: 1.05;
+      margin-bottom: 8px;
     }
 
-    #countdown {
-      font-size: 14px;
-      letter-spacing: 1px;
-      color: #555;
-      margin-bottom: 12px;
+    #countdown{
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+      min-height: 1.2em;
     }
 
-    nav {
+    nav{
       display: flex;
       justify-content: center;
-      gap: 28px;
-      font-size: 15px;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      letter-spacing: 0.06em;
     }
 
-    nav a {
+    nav a{
       text-decoration: none;
-      color: #111;
+      color: var(--ink);
       padding-bottom: 4px;
       border-bottom: 2px solid transparent;
     }
 
-    nav a.active {
-      border-bottom: 2px solid #111;
+    nav a.active{
+      border-bottom-color: var(--ink);
     }
 
-    /* ===== MARQUEE ===== */
-    .marquee {
-      flex: 1;
+    /* ===== MARQUEE AREA (spacing) ===== */
+    .marquee-wrap{
+      flex: 1 1 auto;
+      padding: var(--padY) 0;        /* spacing above/below */
       display: flex;
+      align-items: stretch;
+      background: var(--bg);
+    }
+
+    /* ===== ZOLA-STYLE MARQUEE ===== */
+    .marquee{
+      position: relative;
       width: 100vw;
+      height: 100%;
+      overflow: hidden;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: pan-y; /* allow vertical page gestures even though we hide scroll */
+    }
+    .marquee:active { cursor: grabbing; }
+
+    /* A subtle “premium” fade at the edges like Zola */
+    .marquee::before,
+    .marquee::after{
+      content:"";
+      position:absolute;
+      top:0; bottom:0;
+      width: 64px;
+      z-index: 3;
+      pointer-events:none;
+    }
+    .marquee::before{
+      left:0;
+      background: linear-gradient(to right, var(--bg), rgba(255,255,255,0));
+    }
+    .marquee::after{
+      right:0;
+      background: linear-gradient(to left, var(--bg), rgba(255,255,255,0));
+    }
+
+    /* Track */
+    .track{
+      display: flex;
+      align-items: stretch;
+      height: 100%;
+      will-change: transform;
+      transform: translate3d(0,0,0);
+    }
+
+    /* Panels with different “shapes” */
+    .panel{
+      flex: 0 0 auto;
+      height: 100%;
       overflow: hidden;
     }
 
-    .marquee img {
+    /* widths chosen so there are NO gaps and it feels editorial */
+    .w-wide   { width: 44vw; }
+    .w-med    { width: 32vw; }
+    .w-narrow { width: 24vw; }
+
+    .panel img{
+      width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
     }
 
-    /* Different image widths (Zola feel) */
-    .img-wide { width: 40vw; }
-    .img-medium { width: 30vw; }
-    .img-narrow { width: 20vw; }
-
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 36px;
-      }
-
-      .img-wide { width: 60vw; }
-      .img-medium { width: 50vw; }
-      .img-narrow { width: 40vw; }
+    /* Mobile: one image at a time feels like Zola swipe */
+    @media (max-width: 768px){
+      :root{ --padY: 18px; }
+      header{ padding: 22px 14px 14px; }
+      .w-wide, .w-med, .w-narrow { width: 100vw; }
+      .marquee::before, .marquee::after { width: 36px; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
   <header>
-    <h1>Shannen &amp; Samarth</h1>
-    <div id="countdown">Loading…</div>
+    <div class="names">Shannen &amp; Samarth</div>
+    <div id="countdown"></div>
 
     <nav>
-      <a href="home.html" class="active">Home</a>
+      <a class="active" href="home.html">Home</a>
       <a href="schedule.html">Schedule</a>
       <a href="rsvp.html">RSVP</a>
       <a href="faqs.html">FAQs</a>
     </nav>
   </header>
 
-  <!-- MARQUEE -->
-  <section class="marquee">
-    <img src="photo1.jpg" class="img-wide" alt="">
-    <img src="photo2.jpg" class="img-medium" alt="">
-    <img src="photo3.jpg" class="img-narrow" alt="">
-    <img src="photo4.jpg" class="img-medium" alt="">
-  </section>
+  <div class="marquee-wrap">
+    <section class="marquee" id="marquee">
+      <div class="track" id="track">
+        <!-- BASE SET (you can add more panels later) -->
+        <div class="panel w-wide"><img src="photo1.jpg" alt=""></div>
+        <div class="panel w-med"><img src="photo2.jpg" alt=""></div>
+        <div class="panel w-narrow"><img src="photo3.jpg" alt=""></div>
+        <div class="panel w-med"><img src="photo4.jpg" alt=""></div>
+      </div>
+    </section>
+  </div>
 
-  <!-- COUNTDOWN SCRIPT -->
   <script>
+    /* ===== Countdown (instant, “stationary” feel) ===== */
     const weddingDate = new Date("February 27, 2027 00:00:00").getTime();
     const countdownEl = document.getElementById("countdown");
 
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const diff = weddingDate - now;
-
+    function updateCountdown(){
+      const diff = weddingDate - Date.now();
+      if (diff <= 0) { countdownEl.textContent = "TODAY"; return; }
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
-
-      countdownEl.innerHTML = `${days} days • ${hours} hours • ${minutes} minutes`;
+      countdownEl.textContent = `${days} days • ${hours} hours • ${minutes} minutes`;
     }
-
     updateCountdown();
     setInterval(updateCountdown, 60000);
+
+    /* ===== Zola-style marquee: seamless loop + drag/swipe ===== */
+    const marquee = document.getElementById("marquee");
+    const track = document.getElementById("track");
+
+    // Duplicate content until it’s wide enough to loop seamlessly
+    function ensureLoopWidth() {
+      const minWidth = marquee.clientWidth * 2.2; // enough to cover during drag
+      while (track.scrollWidth < minWidth) {
+        track.innerHTML += track.innerHTML;
+      }
+    }
+    ensureLoopWidth();
+    window.addEventListener("resize", () => {
+      // reset and rebuild duplicates on resize
+      const base = track.querySelectorAll(".panel");
+      const baseHTML = Array.from(base).slice(0, 4).map(n => n.outerHTML).join("");
+      track.innerHTML = baseHTML;
+      ensureLoopWidth();
+      x = 0;
+    });
+
+    let x = 0;               // current translateX
+    let speed = 0.55;        // Zola-like slow glide (increase = faster)
+    let paused = false;
+
+    // Drag state
+    let isDown = false;
+    let startX = 0;
+    let startOffset = 0;
+    let velocity = 0;
+    let lastMoveX = 0;
+    let lastTime = 0;
+
+    function loop() {
+      if (!paused && !isDown) {
+        x -= speed;
+      }
+
+      // Seamless wrap: when we move past half the track, reset
+      const half = track.scrollWidth / 2;
+      if (x <= -half) x += half;
+      if (x >= 0) x -= half;
+
+      track.style.transform = `translate3d(${x}px,0,0)`;
+
+      // Inertia after drag
+      if (!isDown && Math.abs(velocity) > 0.01) {
+        x += velocity;
+        velocity *= 0.95;
+      } else if (!isDown) {
+        velocity = 0;
+      }
+
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    // Hover pause (desktop)
+    marquee.addEventListener("mouseenter", () => paused = true);
+    marquee.addEventListener("mouseleave", () => paused = false);
+
+    // Mouse drag
+    marquee.addEventListener("mousedown", (e) => {
+      isDown = true;
+      startX = e.clientX;
+      startOffset = x;
+      velocity = 0;
+      lastMoveX = e.clientX;
+      lastTime = performance.now();
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      const dx = e.clientX - startX;
+      x = startOffset + dx;
+
+      const now = performance.now();
+      const dt = now - lastTime;
+      if (dt > 0) {
+        velocity = (e.clientX - lastMoveX) / dt * 16; // normalize to ~60fps
+        lastMoveX = e.clientX;
+        lastTime = now;
+      }
+    });
+
+    window.addEventListener("mouseup", () => {
+      isDown = false;
+    });
+
+    // Touch drag (mobile)
+    marquee.addEventListener("touchstart", (e) => {
+      isDown = true;
+      startX = e.touches[0].clientX;
+      startOffset = x;
+      velocity = 0;
+      lastMoveX = startX;
+      lastTime = performance.now();
+    }, { passive: true });
+
+    marquee.addEventListener("touchmove", (e) => {
+      if (!isDown) return;
+      const cx = e.touches[0].clientX;
+      const dx = cx - startX;
+      x = startOffset + dx;
+
+      const now = performance.now();
+      const dt = now - lastTime;
+      if (dt > 0) {
+        velocity = (cx - lastMoveX) / dt * 16;
+        lastMoveX = cx;
+        lastTime = now;
+      }
+    }, { passive: true });
+
+    marquee.addEventListener("touchend", () => {
+      isDown = false;
+    });
   </script>
 
 </body>
