@@ -2,109 +2,88 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <title>Shannen & Samarth</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Shannen & Samarth — Home</title>
+
+  <!-- Google Font (Alex Brush) -->
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
+      background: #f6f2ee;
       font-family: Georgia, serif;
-      background: #f6f2ee;
-      color: #111;
+      color: #2e2e2e;
     }
 
-    /* =========================
-       HEADER (NAMES + TABS)
-    ========================== */
-    .header {
-      background: #f6f2ee;
+    header {
       text-align: center;
-      padding: 26px 16px 14px;
+      padding: 48px 16px 28px;
     }
 
-    .brand {
-      font-size: 28px;
-      letter-spacing: 0.22em;
+    .names {
+      font-family: 'Alex Brush', cursive;
+      font-size: 56px;
+      line-height: 1;
     }
 
-    .nav {
-      margin-top: 14px;
+    .countdown {
+      margin-top: 12px;
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      opacity: 0.75;
+    }
+
+    nav {
+      margin-top: 28px;
       display: flex;
       justify-content: center;
-      gap: 26px;
+      gap: 28px;
       flex-wrap: wrap;
-      font-size: 18px;
     }
 
-    .nav a {
+    nav a {
       text-decoration: none;
-      color: #111;
-      padding-bottom: 6px;
-      border-bottom: 2px solid transparent;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      color: #2e2e2e;
+      padding-bottom: 4px;
+      border-bottom: 1px solid transparent;
     }
 
-    .nav a.active {
-      border-bottom-color: #111;
+    nav a:hover {
+      border-bottom-color: #2e2e2e;
     }
 
-    /* =========================
-       MARQUEE (ZOLA STYLE)
-    ========================== */
-    .marquee {
-      height: calc(100vh - 140px); /* fills screen under header */
-      overflow: hidden;
+    main {
+      max-width: 1100px;
+      margin: 40px auto 80px;
+      padding: 0 20px;
+      text-align: center;
     }
 
-    .marquee-track {
-      height: 100%;
-      display: flex;
-      width: max-content;
-      animation: marquee 24s linear infinite;
+    .placeholder {
+      margin-top: 40px;
+      font-size: 14px;
+      opacity: 0.6;
     }
 
-    .marquee:hover .marquee-track {
-      animation-play-state: paused; /* optional luxury touch */
-    }
-
-    .marquee-item {
-      height: 100%;
-      width: min(520px, 80vw);
-      flex: 0 0 auto;
-    }
-
-    .ph {
-      height: 100%;
-      width: 100%;
-      background-size: cover;
-      background-position: center;
-    }
-
-    /* TEMP placeholders (replace with photos later) */
-    .ph1 { background: #d9d2cc; }
-    .ph2 { background: #cfc6bf; }
-    .ph3 { background: #e2dad3; }
-    .ph4 { background: #c8bfb8; }
-
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    /* =========================
-       MOBILE
-    ========================== */
-    @media (max-width: 820px) {
-      .brand { font-size: 22px; }
-      .nav { font-size: 16px; gap: 18px; }
-
-      .marquee {
-        height: calc(100vh - 130px);
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      header {
+        padding-top: 36px;
       }
 
-      .marquee-item {
-        width: 86vw;
+      .names {
+        font-size: 42px;
+      }
+
+      nav {
+        gap: 18px;
       }
     }
   </style>
@@ -112,37 +91,52 @@
 
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="brand">SHANNEN &amp; SAMARTH</div>
+<header>
+  <div class="names">Shannen &amp; Samarth</div>
+  <div id="countdown" class="countdown">Loading…</div>
 
-    <nav class="nav">
-      <a class="active" href="home.html">Home</a>
-      <a href="schedule.html">Schedule</a>
-      <a href="rsvp.html">RSVP</a>
-      <a href="attire.html">Attire</a>
-      <a href="faqs.html">FAQs</a>
-    </nav>
-  </header>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="https://YOUR-ZOLA-OR-WITHJOY-URL/rsvp">RSVP</a>
+    <a href="https://YOUR-ZOLA-OR-WITHJOY-URL/faqs">FAQs</a>
+  </nav>
+</header>
 
-  <!-- MARQUEE -->
-  <section class="marquee">
-    <div class="marquee-track">
+<main>
+  <!-- This space is intentionally empty until you add photos -->
+  <div class="placeholder">
+    Our story continues here ✨
+  </div>
+</main>
 
-      <!-- SET A -->
-      <div class="marquee-item"><div class="ph ph1"></div></div>
-      <div class="marquee-item"><div class="ph ph2"></div></div>
-      <div class="marquee-item"><div class="ph ph3"></div></div>
-      <div class="marquee-item"><div class="ph ph4"></div></div>
+<!-- Countdown Script -->
+<script>
+  // Wedding date: 27 February 2027 (Perth time)
+  const weddingDate = new Date("2027-02-27T15:00:00+08:00");
 
-      <!-- SET B (duplicate for seamless loop) -->
-      <div class="marquee-item"><div class="ph ph1"></div></div>
-      <div class="marquee-item"><div class="ph ph2"></div></div>
-      <div class="marquee-item"><div class="ph ph3"></div></div>
-      <div class="marquee-item"><div class="ph ph4"></div></div>
+  const el = document.getElementById("countdown");
 
-    </div>
-  </section>
+  function tick(){
+    const now = new Date();
+    const diff = weddingDate - now;
+
+    if (diff <= 0){
+      el.textContent = "TODAY 🤍";
+      return;
+    }
+
+    const totalSeconds = Math.floor(diff / 1000);
+    const days = Math.floor(totalSeconds / (60 * 60 * 24));
+    const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+    const mins = Math.floor((totalSeconds % (60 * 60)) / 60);
+
+    el.textContent = `${days} DAYS • ${hours} HOURS • ${mins} MINUTES`;
+  }
+
+  tick();
+  setInterval(tick, 1000);
+</script>
 
 </body>
 </html>
