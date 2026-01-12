@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shannen & Samarth</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Alex+Brush&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -17,7 +17,7 @@
 
     body {
       font-family: "Playfair Display", serif;
-      background: #faf8f5;
+      background: #fbfaf8;
       color: #222;
       overflow-x: hidden;
     }
@@ -25,22 +25,22 @@
     /* ================= HEADER ================= */
 
     header {
-      background: #faf8f5;
+      background: #fbfaf8;
       text-align: center;
-      padding: 48px 16px 36px;
+      padding: 56px 16px 48px;
     }
 
     .names {
       font-family: "Alex Brush", cursive;
-      font-size: clamp(40px, 6vw, 56px);
-      margin-bottom: 16px;
+      font-size: clamp(44px, 6vw, 60px);
+      margin-bottom: 18px;
     }
 
     .countdown {
       font-size: 14px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
 
     nav {
@@ -64,21 +64,37 @@
 
     .marquee {
       width: 100vw;
-      height: 65vh;
+      height: 70vh;
+      margin-top: 40px; /* pushes photos LOWER */
       overflow: hidden;
-      background: #e6e3df;
+      background: #e7e4df;
     }
 
     .marquee-track {
       display: flex;
-      width: max-content;
+      align-items: center;
+      gap: 0;
       height: 100%;
-      animation: scroll 40s linear infinite;
+      width: max-content;
+      animation: scroll 50s linear infinite;
     }
 
+    /* DIFFERENT PHOTO SHAPES */
     .slide {
-      flex: 0 0 33.3333vw; /* EXACTLY 3 images across screen */
       height: 100%;
+      flex-shrink: 0;
+    }
+
+    .wide {
+      width: 45vw;
+    }
+
+    .square {
+      width: 33vw;
+    }
+
+    .tall {
+      width: 28vw;
     }
 
     .slide img {
@@ -100,8 +116,14 @@
     /* ================= MOBILE ================= */
 
     @media (max-width: 768px) {
-      .slide {
-        flex: 0 0 100vw;
+      .marquee {
+        height: 60vh;
+      }
+
+      .wide,
+      .square,
+      .tall {
+        width: 100vw;
       }
     }
   </style>
@@ -126,14 +148,14 @@
   <section class="marquee">
     <div class="marquee-track">
       <!-- FIRST SET -->
-      <div class="slide"><img src="photo1.jpg" alt=""></div>
-      <div class="slide"><img src="photo2.jpg" alt=""></div>
-      <div class="slide"><img src="photo3.jpg" alt=""></div>
+      <div class="slide wide"><img src="photo1.jpg" alt=""></div>
+      <div class="slide square"><img src="photo2.jpg" alt=""></div>
+      <div class="slide tall"><img src="photo3.jpg" alt=""></div>
 
       <!-- DUPLICATE SET (REQUIRED FOR LOOP) -->
-      <div class="slide"><img src="photo1.jpg" alt=""></div>
-      <div class="slide"><img src="photo2.jpg" alt=""></div>
-      <div class="slide"><img src="photo3.jpg" alt=""></div>
+      <div class="slide wide"><img src="photo1.jpg" alt=""></div>
+      <div class="slide square"><img src="photo2.jpg" alt=""></div>
+      <div class="slide tall"><img src="photo3.jpg" alt=""></div>
     </div>
   </section>
 
