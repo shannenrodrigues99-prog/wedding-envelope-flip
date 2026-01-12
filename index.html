@@ -64,11 +64,22 @@
     </div>
   </div>
 
-  <script>
-    const env = document.getElementById("env");
-    env.addEventListener("click", () => {
-      env.classList.toggle("flipped");
-    });
-  </script>
+<script>
+  const env = document.getElementById("env");
+  let alreadyClicked = false;
+
+  env.addEventListener("click", () => {
+    if (alreadyClicked) return;
+    alreadyClicked = true;
+
+    env.classList.add("flipped");
+
+    setTimeout(() => {
+      window.location.href = "https://www.google.com/";
+    }, 900);
+  });
+</script>
 </body>
 </html>
+
+
