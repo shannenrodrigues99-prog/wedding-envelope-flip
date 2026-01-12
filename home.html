@@ -8,174 +8,170 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Alex+Brush&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
+    :root{
+      --bg: #ffffff;      /* PURE WHITE */
+      --ink: #141414;
+      --muted: #6a6a6a;
     }
+
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      background: #f4f2ee;
-      color: #1a1a1a;
+      background: var(--bg);
+      color: var(--ink);
       font-family: "Cormorant Garamond", serif;
     }
 
     /* ===== HEADER ===== */
-    header {
-      text-align: center;
-      padding: 32px 16px 18px;
+    header{
+      text-align:center;
+      padding: 36px 16px 18px;
+      background: #ffffff;
     }
 
-    .names {
-      font-family: "Alex Brush", cursive;
-      font-size: 58px;
-      margin: 0 0 8px;
-      font-weight: 400;
-    }
-
-    .countdown {
-      font-size: 14px;
-      letter-spacing: 0.18em;
+    .names{
+      margin: 0;
+      font-weight: 500;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #555;
-      margin-bottom: 18px;
+      font-size: 36px;
     }
 
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      font-size: 18px;
+    .countdown{
+      margin-top: 10px;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    nav{
+      margin-top: 20px;
+      display:flex;
+      justify-content:center;
+      gap: 28px;
+      font-size: 16px;
       letter-spacing: 0.06em;
-      flex-wrap: wrap;
     }
 
-    nav a {
-      text-decoration: none;
-      color: #1a1a1a;
-      padding-bottom: 8px;
+    nav a{
+      text-decoration:none;
+      color: var(--ink);
+      padding-bottom: 6px;
       border-bottom: 2px solid transparent;
     }
 
-    nav a.active {
-      border-bottom-color: #1a1a1a;
+    nav a.active{
+      border-bottom-color: var(--ink);
     }
 
-    /* ===== MARQUEE ===== */
-    .marquee-shell {
-      width: 92vw;
-      max-width: 1200px;
-      margin: 20px auto 50px;
+    /* ===== FULL-WIDTH MARQUEE ===== */
+    .marquee{
+      width: 100vw;
+      height: clamp(420px, 65vh, 620px);
       overflow: hidden;
-      border-radius: 26px;
-      background: #ddd;
+      position: relative;
+      background: #e9e9e9;
     }
 
-    .marquee {
-      height: min(560px, 65vh);
-    }
-
-    .track {
+    .track{
       display: flex;
+      height: 100%;
       width: max-content;
-      height: 100%;
-      animation: scroll 22s linear infinite;
+      animation: scroll 28s linear infinite;
     }
 
-    .slide {
-      width: min(560px, 90vw);
-      height: 100%;
+    .marquee:hover .track{
+      animation-play-state: paused;
+    }
+
+    .slide{
       flex: 0 0 auto;
+      width: min(520px, 90vw);
+      height: 100%;
+      position: relative;
     }
 
-    .slide img {
+    .slide img{
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
 
-    @keyframes scroll {
+    /* subtle divider like Zola */
+    .slide::after{
+      content:"";
+      position:absolute;
+      right:0;
+      top:0;
+      width:1px;
+      height:100%;
+      background: rgba(255,255,255,0.45);
+    }
+
+    @keyframes scroll{
       from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
+      to { transform: translateX(-50%); }
     }
 
     /* ===== MOBILE ===== */
-    @media (max-width: 520px) {
-      .names {
-        font-size: 44px;
-      }
-
-      nav {
-        font-size: 16px;
-        gap: 18px;
-      }
-
-      .marquee {
-        height: 54vh;
-      }
+    @media (max-width: 520px){
+      .names{ font-size: 28px; letter-spacing: 0.1em; }
+      nav{ gap: 18px; font-size: 15px; }
+      .marquee{ height: 58vh; }
+      .slide{ width: 85vw; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
   <header>
     <h1 class="names">Shannen &amp; Samarth</h1>
     <div class="countdown" id="countdown"></div>
 
     <nav>
-      <a class="active" href="home.html">Home</a>
+      <a href="home.html" class="active">Home</a>
       <a href="schedule.html">Schedule</a>
       <a href="rsvp.html">RSVP</a>
       <a href="faqs.html">FAQs</a>
     </nav>
   </header>
 
-  <!-- MARQUEE -->
-  <section class="marquee-shell">
-    <div class="marquee">
-      <div class="track">
-        <!-- Replace with your real photos -->
-        <div class="slide"><img src="photo1.jpg" alt=""></div>
-        <div class="slide"><img src="photo2.jpg" alt=""></div>
-        <div class="slide"><img src="photo3.jpg" alt=""></div>
-
-        <!-- Duplicate for seamless loop -->
-        <div class="slide"><img src="photo1.jpg" alt=""></div>
-        <div class="slide"><img src="photo2.jpg" alt=""></div>
-        <div class="slide"><img src="photo3.jpg" alt=""></div>
-      </div>
+  <!-- FULL WIDTH MARQUEE -->
+  <section class="marquee">
+    <div class="track">
+      <!-- Repeat images twice for seamless loop -->
+      <div class="slide"><img src="photo1.jpg" alt=""></div>
+      <div class="slide"><img src="photo2.jpg" alt=""></div>
+      <div class="slide"><img src="photo3.jpg" alt=""></div>
+      <div class="slide"><img src="photo1.jpg" alt=""></div>
+      <div class="slide"><img src="photo2.jpg" alt=""></div>
+      <div class="slide"><img src="photo3.jpg" alt=""></div>
     </div>
   </section>
 
-  <!-- COUNTDOWN SCRIPT -->
   <script>
-    const targetDate = new Date("2027-02-27T00:00:00");
-    const countdownEl = document.getElementById("countdown");
+    const targetDate = new Date("February 27, 2027 00:00:00").getTime();
+    const countdown = document.getElementById("countdown");
 
-    function updateCountdown() {
-      const now = new Date();
+    setInterval(() => {
+      const now = new Date().getTime();
       const diff = targetDate - now;
 
-      if (diff <= 0) {
-        countdownEl.textContent = "TODAY";
-        return;
-      }
+      if (diff < 0) return;
 
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
 
-      countdownEl.textContent =
-        `${days} DAYS • ${hours} HOURS • ${minutes} MINUTES`;
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+      countdown.textContent = `${days} DAYS • ${hours} HOURS • ${minutes} MINUTES`;
+    }, 1000);
   </script>
 
 </body>
