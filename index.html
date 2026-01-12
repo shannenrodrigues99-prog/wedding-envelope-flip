@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Envelope</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #f6f3ef;
+    }
+
+    .envelope {
+      width: 360px;
+      max-width: 90vw;
+      perspective: 1200px;
+      cursor: pointer;
+    }
+
+    .inner {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease;
+    }
+
+    .envelope.flipped .inner {
+      transform: rotateY(180deg);
+    }
+
+    .face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+    }
+
+    .face img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .back {
+      transform: rotateY(180deg);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="envelope" id="env">
+    <div class="inner">
+      <div class="face front">
+        <img src="envelope-front.png" alt="Envelope front">
+      </div>
+      <div class="face back">
+        <img src="envelope-back.png" alt="Envelope back">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const env = document.getElementById("env");
+    env.addEventListener("click", () => {
+      env.classList.toggle("flipped");
+    });
+  </script>
+</body>
+</html>
