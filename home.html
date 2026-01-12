@@ -1,164 +1,89 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8">
   <title>Shannen & Samarth</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Alex Brush -->
+  <!-- Google Font (Alex Brush) -->
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root{
-      --bg: #ffffff;
-      --ink: #111;
-      --muted: #666;
-      --marqueePadTop: 22px;
-      --marqueePadBottom: 36px; /* 👈 SPACE BELOW PHOTOS */
-    }
-
-    html, body {
-      height: 100vh;
-      overflow: hidden;       /* no scroll */
-      background: var(--bg);
+    * {
+      box-sizing: border-box;
     }
 
     body {
-      display: flex;
-      flex-direction: column;
-      font-family: serif;
-      color: var(--ink);
+      margin: 0;
+      background: #f6f2ee;
+      font-family: Georgia, serif;
+      color: #2e2e2e;
     }
 
-    /* ===== HEADER ===== */
-    header{
+    header {
       text-align: center;
-      padding: 26px 16px 16px;
-      flex: 0 0 auto;
-      background: var(--bg);
+      padding: 48px 16px 28px;
     }
 
-    .names{
-      font-family: "Alex Brush", cursive;
-      font-size: clamp(36px, 6vw, 54px);
-      font-weight: 400;
-      line-height: 1.05;
-      margin-bottom: 8px;
+    .names {
+      font-family: 'Alex Brush', cursive;
+      font-size: 56px;
+      line-height: 1;
     }
 
-    #countdown{
-      font-size: 13px;
+    .countdown {
+      margin-top: 12px;
+      font-size: 14px;
       letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 14px;
-      min-height: 1.2em;
+      opacity: 0.75;
     }
 
-    nav{
+    nav {
+      margin-top: 28px;
       display: flex;
       justify-content: center;
-      gap: 24px;
+      gap: 28px;
       flex-wrap: wrap;
-      font-size: 14px;
-      letter-spacing: 0.06em;
     }
 
-    nav a{
+    nav a {
       text-decoration: none;
-      color: var(--ink);
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      color: #2e2e2e;
       padding-bottom: 4px;
-      border-bottom: 2px solid transparent;
+      border-bottom: 1px solid transparent;
     }
 
-    nav a.active{
-      border-bottom-color: var(--ink);
+    nav a:hover {
+      border-bottom-color: #2e2e2e;
     }
 
-    /* ===== MARQUEE WRAPPER ===== */
-    .marquee-wrap{
-      flex: 1 1 auto;
-      padding: var(--marqueePadTop) 0 var(--marqueePadBottom);
-      display: flex;
-      align-items: stretch;
-      background: var(--bg);
+    main {
+      max-width: 1100px;
+      margin: 40px auto 80px;
+      padding: 0 20px;
+      text-align: center;
     }
 
-    /* ===== MARQUEE ===== */
-    .marquee{
-      position: relative;
-      width: 100vw;
-      height: 100%;
-      overflow: hidden;
-      cursor: grab;
-      user-select: none;
-    }
-    .marquee:active { cursor: grabbing; }
-
-    /* Zola-style fade edges */
-    .marquee::before,
-    .marquee::after{
-      content:"";
-      position:absolute;
-      top:0; bottom:0;
-      width: 60px;
-      z-index: 3;
-      pointer-events:none;
-    }
-    .marquee::before{
-      left:0;
-      background: linear-gradient(to right, var(--bg), rgba(255,255,255,0));
-    }
-    .marquee::after{
-      right:0;
-      background: linear-gradient(to left, var(--bg), rgba(255,255,255,0));
+    .placeholder {
+      margin-top: 40px;
+      font-size: 14px;
+      opacity: 0.6;
     }
 
-    /* ===== TRACK ===== */
-    .track{
-      display: flex;
-      height: 100%;
-      width: max-content;
-      will-change: transform;
-      transform: translate3d(0,0,0);
-    }
-
-    /* ===== PANELS ===== */
-    .panel{
-      flex: 0 0 auto;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    /* Different editorial widths */
-    .wide   { width: 44vw; }
-    .med    { width: 32vw; }
-    .narrow { width: 24vw; }
-
-    .panel img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;   /* prevents stretching */
-      display: block;
-    }
-
-    /* ===== MOBILE ===== */
-    @media (max-width: 768px){
-      :root{
-        --marqueePadTop: 16px;
-        --marqueePadBottom: 24px;
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      header {
+        padding-top: 36px;
       }
 
-      header{ padding: 22px 14px 14px; }
-      nav{ gap: 18px; }
+      .names {
+        font-size: 42px;
+      }
 
-      .wide, .med, .narrow { width: 100vw; }
-
-      .marquee::before,
-      .marquee::after{
-        width: 36px;
+      nav {
+        gap: 18px;
       }
     }
   </style>
@@ -166,84 +91,52 @@
 
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="names">Shannen &amp; Samarth</div>
-    <div id="countdown"></div>
+<header>
+  <div class="names">Shannen &amp; Samarth</div>
+  <div id="countdown" class="countdown">Loading…</div>
 
-    <nav>
-      <a class="active" href="home.html">Home</a>
-      <a href="schedule.html">Schedule</a>
-      <a href="rsvp.html">RSVP</a>
-      <a href="faqs.html">FAQs</a>
-    </nav>
-  </header>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="https://YOUR-ZOLA-OR-WITHJOY-URL/rsvp">RSVP</a>
+    <a href="https://YOUR-ZOLA-OR-WITHJOY-URL/faqs">FAQs</a>
+  </nav>
+</header>
 
-  <!-- MARQUEE -->
-  <div class="marquee-wrap">
-    <section class="marquee" id="marquee">
-      <div class="track" id="track">
-        <!-- BASE SET -->
-        <div class="panel wide"><img src="photo1.jpg" alt=""></div>
-        <div class="panel med"><img src="photo2.jpg" alt=""></div>
-        <div class="panel narrow"><img src="photo3.jpg" alt=""></div>
-        <div class="panel med"><img src="photo4.jpg" alt=""></div>
-      </div>
-    </section>
+<main>
+  <!-- This space is intentionally empty until you add photos -->
+  <div class="placeholder">
+    Our story continues here ✨
   </div>
+</main>
 
-  <!-- SCRIPTS -->
-  <script>
-    /* ===== COUNTDOWN ===== */
-    const weddingDate = new Date("February 27, 2027 00:00:00").getTime();
-    const countdownEl = document.getElementById("countdown");
+<!-- Countdown Script -->
+<script>
+  // Wedding date: 27 February 2027 (Perth time)
+  const weddingDate = new Date("2027-02-27T15:00:00+08:00");
 
-    function updateCountdown(){
-      const diff = weddingDate - Date.now();
-      if (diff <= 0) { countdownEl.textContent = "TODAY"; return; }
+  const el = document.getElementById("countdown");
 
-      const days = Math.floor(diff / (1000*60*60*24));
-      const hours = Math.floor((diff / (1000*60*60)) % 24);
-      const minutes = Math.floor((diff / (1000*60)) % 60);
+  function tick(){
+    const now = new Date();
+    const diff = weddingDate - now;
 
-      countdownEl.textContent = `${days} days • ${hours} hours • ${minutes} minutes`;
+    if (diff <= 0){
+      el.textContent = "TODAY 🤍";
+      return;
     }
-    updateCountdown();
-    setInterval(updateCountdown, 60000);
 
-    /* ===== SEAMLESS ZOLA-STYLE LOOP ===== */
-    const marquee = document.getElementById("marquee");
-    const track = document.getElementById("track");
+    const totalSeconds = Math.floor(diff / 1000);
+    const days = Math.floor(totalSeconds / (60 * 60 * 24));
+    const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+    const mins = Math.floor((totalSeconds % (60 * 60)) / 60);
 
-    function buildLoop(){
-      const minWidth = marquee.clientWidth * 2.5;
-      while (track.scrollWidth < minWidth) {
-        track.innerHTML += track.innerHTML;
-      }
-    }
-    buildLoop();
+    el.textContent = `${days} DAYS • ${hours} HOURS • ${mins} MINUTES`;
+  }
 
-    window.addEventListener("resize", () => {
-      const basePanels = Array.from(track.children).slice(0, 4).map(p => p.outerHTML).join("");
-      track.innerHTML = basePanels;
-      buildLoop();
-      x = 0;
-    });
-
-    let x = 0;
-    const speed = 0.45;  /* slow, luxe Zola pace */
-
-    function animate(){
-      x -= speed;
-
-      const half = track.scrollWidth / 2;
-      if (x <= -half) x += half;
-
-      track.style.transform = `translate3d(${x}px,0,0)`;
-      requestAnimationFrame(animate);
-    }
-    animate();
-  </script>
+  tick();
+  setInterval(tick, 1000);
+</script>
 
 </body>
 </html>
