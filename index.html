@@ -65,18 +65,20 @@
   </div>
 
 <script>
-  const env = document.getElementById("env");
-  let alreadyClicked = false;
+  const env = document.querySelector(".envelope");
+  let clicked = false;
 
   env.addEventListener("click", () => {
-    if (alreadyClicked) return;
-    alreadyClicked = true;
+    if (clicked) return;
+    clicked = true;
 
+    // flip animation
     env.classList.add("flipped");
 
+    // open new page AFTER flip finishes
     setTimeout(() => {
-      window.location.href = "https://www.google.com/";
-    }, 900);
+      window.location.assign("https://www.google.com/");
+    }, 1000);
   });
 </script>
 </body>
