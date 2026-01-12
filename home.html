@@ -21,7 +21,7 @@
     }
 
     /* ===== HEADER ===== */
-    .header {
+    header {
       text-align: center;
       padding: 28px 16px 14px;
     }
@@ -41,21 +41,22 @@
       margin-bottom: 16px;
     }
 
-    .tabs {
+    nav {
       display: flex;
       justify-content: center;
       gap: 26px;
       font-size: 18px;
+      flex-wrap: wrap;
     }
 
-    .tabs a {
+    nav a {
       text-decoration: none;
       color: #1a1a1a;
       padding-bottom: 8px;
       border-bottom: 2px solid transparent;
     }
 
-    .tabs a.active {
+    nav a.active {
       border-bottom-color: #1a1a1a;
     }
 
@@ -71,8 +72,8 @@
     }
 
     .marquee {
-      height: min(520px, 64vh);
       position: relative;
+      height: min(520px, 64vh);
     }
 
     .track {
@@ -121,11 +122,12 @@
       display: block;
     }
 
+    /* This is the KEY FIX: the ampersand is safely scaled inside the box */
     .amp-svg {
       position: absolute;
-      inset: 10%;
-      width: 80%;
-      height: 80%;
+      inset: 12%;
+      width: 76%;
+      height: 76%;
     }
 
     #ampPath {
@@ -139,7 +141,7 @@
     /* ===== MOBILE ===== */
     @media (max-width: 520px) {
       .names { font-size: 32px; }
-      .tabs { font-size: 16px; gap: 18px; }
+      nav { font-size: 16px; gap: 18px; }
       .marquee { height: 52vh; }
       .mono-box { width: 78vw; }
     }
@@ -148,108 +150,102 @@
 
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <h1 class="names">SHANNEN &amp; SAMARTH</h1>
-    <div class="countdown" id="countdown"></div>
+<header>
+  <h1 class="names">SHANNEN &amp; SAMARTH</h1>
+  <div class="countdown" id="countdown"></div>
 
-    <nav class="tabs">
-      <a class="active" href="home.html">Home</a>
-      <a href="schedule.html">Schedule</a>
-      <a href="faqs.html">FAQs</a>
-      <a href="registry.html">Registry</a>
-    </nav>
-  </header>
+  <nav>
+    <a class="active" href="home.html">Home</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="faqs.html">FAQs</a>
+    <a href="registry.html">Registry</a>
+  </nav>
+</header>
 
-  <!-- MARQUEE -->
-  <section class="marquee-shell">
-    <div class="marquee">
+<section class="marquee-shell">
+  <div class="marquee">
 
-      <div class="track">
-        <!-- Replace with your real photos later -->
-        <div class="slide"><img src="photo1.jpg" alt=""></div>
-        <div class="slide"><img src="photo2.jpg" alt=""></div>
-        <div class="slide"><img src="photo3.jpg" alt=""></div>
+    <!-- PHOTO LOOP (replace images later) -->
+    <div class="track">
+      <div class="slide"><img src="photo1.jpg" alt=""></div>
+      <div class="slide"><img src="photo2.jpg" alt=""></div>
+      <div class="slide"><img src="photo3.jpg" alt=""></div>
 
-        <!-- duplicate for loop -->
-        <div class="slide"><img src="photo1.jpg" alt=""></div>
-        <div class="slide"><img src="photo2.jpg" alt=""></div>
-        <div class="slide"><img src="photo3.jpg" alt=""></div>
-      </div>
-
-      <!-- MONOGRAM -->
-      <div class="mono-wrap">
-        <div class="mono-box">
-
-          <!-- SOLID S S IMAGE -->
-          <!-- Upload your S&S PNG and name it exactly this -->
-          <img src="ss-solid.png" class="ss-img" alt="" />
-
-          <!-- DRAWN AMPERSAND -->
-          <svg class="amp-svg"
-     viewBox="0 0 600 600"
-     preserveAspectRatio="xMidYMid meet">
-
-            <path id="ampPath"
-              d="M360 120
-                 C305 95 235 120 235 190
-                 C235 255 310 275 350 315
-                 C385 350 375 410 320 430
-                 C260 455 195 420 210 350
-                 C220 300 280 275 320 255
-                 C375 225 430 205 430 165
-                 C430 120 395 105 360 120
-                 M205 350
-                 C185 450 295 520 390 470
-                 C470 430 485 350 430 300
-                 C395 265 340 250 300 225
-                 C240 190 245 140 290 120
-                 C335 95 420 100 430 165" />
-          </svg>
-
-        </div>
-      </div>
-
+      <div class="slide"><img src="photo1.jpg" alt=""></div>
+      <div class="slide"><img src="photo2.jpg" alt=""></div>
+      <div class="slide"><img src="photo3.jpg" alt=""></div>
     </div>
-  </section>
 
-  <script>
-    /* COUNTDOWN */
-    const target = new Date("2027-02-27T00:00:00");
-    const cd = document.getElementById("countdown");
+    <!-- MONOGRAM -->
+    <div class="mono-wrap">
+      <div class="mono-box">
 
-    function updateCountdown() {
-      const now = new Date();
-      const diff = target - now;
+        <!-- SOLID S S IMAGE -->
+        <!-- Upload this file -->
+        <img src="ss-solid.png" class="ss-img" alt="">
 
-      if (diff <= 0) {
-        cd.textContent = "TODAY • PERTH, WA";
-        return;
-      }
+        <!-- DRAWN AMPERSAND -->
+        <svg class="amp-svg" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid meet">
+          <path id="ampPath"
+            d="M360 120
+               C305 95 235 120 235 190
+               C235 255 310 275 350 315
+               C385 350 375 410 320 430
+               C260 455 195 420 210 350
+               C220 300 280 275 320 255
+               C375 225 430 205 430 165
+               C430 120 395 105 360 120
+               M205 350
+               C185 450 295 520 390 470
+               C470 430 485 350 430 300
+               C395 265 340 250 300 225
+               C240 190 245 140 290 120
+               C335 95 420 100 430 165" />
+        </svg>
 
-      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const m = Math.floor((diff / (1000 * 60)) % 60);
+      </div>
+    </div>
 
-      cd.textContent = `${d} DAYS • ${h} HOURS • ${m} MINUTES • FEBRUARY 27, 2027 • PERTH, WA`;
+  </div>
+</section>
+
+<script>
+  /* COUNTDOWN */
+  const target = new Date("2027-02-27T00:00:00");
+  const cd = document.getElementById("countdown");
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = target - now;
+
+    if (diff <= 0) {
+      cd.textContent = "TODAY • PERTH, WA";
+      return;
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
 
-    /* AMPERSAND DRAW */
-    window.addEventListener("load", () => {
-      const p = document.getElementById("ampPath");
-      const len = p.getTotalLength();
+    cd.textContent =
+      `${d} DAYS • ${h} HOURS • ${m} MINUTES • FEBRUARY 27, 2027 • PERTH, WA`;
+  }
 
-      p.style.strokeDasharray = len;
-      p.style.strokeDashoffset = len;
-      p.getBoundingClientRect();
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
 
-      p.style.transition = "stroke-dashoffset 1.8s ease";
-      p.style.strokeDashoffset = "0";
-    });
-  </script>
+  /* AMPERSAND DRAW */
+  window.addEventListener("load", () => {
+    const p = document.getElementById("ampPath");
+    const len = p.getTotalLength();
+
+    p.style.strokeDasharray = len;
+    p.style.strokeDashoffset = len;
+    p.getBoundingClientRect(); // force repaint
+    p.style.transition = "stroke-dashoffset 1.8s ease";
+    p.style.strokeDashoffset = "0";
+  });
+</script>
 
 </body>
 </html>
