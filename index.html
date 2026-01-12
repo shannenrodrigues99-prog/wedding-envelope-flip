@@ -72,15 +72,14 @@
     if (clicked) return;
     clicked = true;
 
+    // Trigger the flip
     env.classList.add("flipped");
 
+    // Pause so people notice the back, then open link
     setTimeout(() => {
       window.location.assign("https://www.google.com/");
-    }, 1200);
+    }, 1800);
   });
 </script>
-</body>
-</html>
-
 
 
