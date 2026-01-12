@@ -35,18 +35,18 @@
       text-align: center;
     }
 
-    /* Bottom instruction */
+    /* Bottom instruction (bigger on desktop) */
     .bottom-instruction{
       font-family: "Alex Brush", cursive;
-      font-size: 22px;
+      font-size: 26px; /* ⬆️ increased */
       color: #111;
       text-align: center;
-      opacity: 0.85;
+      opacity: 0.9;
     }
 
     /* Envelope (ONLY thing that flips) */
     .envelope{
-      width: min(720px, 88vw);
+      width: min(560px, 82vw); /* ⬅️ reduced desktop size */
       perspective: 1400px;
       cursor: pointer;
     }
@@ -80,7 +80,7 @@
       transform: rotateY(180deg);
     }
 
-    /* MOBILE SPACING FIX */
+    /* MOBILE SPACING & SIZE FIX */
     @media (max-width: 768px) {
       .page{
         justify-content: center;
@@ -88,8 +88,12 @@
         padding: 50px 20px 50px;
       }
 
+      .envelope{
+        width: min(88vw, 480px);
+      }
+
       .bottom-instruction{
-        font-size: 20px;
+        font-size: 22px; /* still readable on phone */
       }
     }
   </style>
