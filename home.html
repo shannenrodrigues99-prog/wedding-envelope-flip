@@ -1,28 +1,26 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>Shannen & Samarth</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Google Font (Alex Brush) -->
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      background: #f6f2ee;
+      background: #ffffff; /* whiter background */
       font-family: Georgia, serif;
       color: #2e2e2e;
     }
 
     header {
       text-align: center;
-      padding: 48px 16px 28px;
+      padding: 56px 16px 40px; /* breathing room */
     }
 
     .names {
@@ -36,6 +34,7 @@
       font-size: 14px;
       letter-spacing: 0.14em;
       opacity: 0.75;
+      min-height: 18px; /* prevents “jump” while loading */
     }
 
     nav {
@@ -51,39 +50,58 @@
       font-size: 14px;
       letter-spacing: 0.12em;
       color: #2e2e2e;
-      padding-bottom: 4px;
-      border-bottom: 1px solid transparent;
+      padding-bottom: 6px;
+      border-bottom: 2px solid transparent;
     }
 
     nav a:hover {
       border-bottom-color: #2e2e2e;
     }
 
-    main {
-      max-width: 1100px;
-      margin: 40px auto 80px;
-      padding: 0 20px;
-      text-align: center;
+    nav a.active {
+      border-bottom-color: #2e2e2e;
     }
 
-    .placeholder {
-      margin-top: 40px;
-      font-size: 14px;
-      opacity: 0.6;
+    /* ===== Marquee ===== */
+    .marquee-section {
+      width: 100%;
+      overflow: hidden;
+      margin: 56px 0 72px; /* space above and below marquee */
+    }
+
+    .marquee-track {
+      display: flex;
+      width: fit-content;
+      animation: marquee 40s linear infinite;
+      will-change: transform;
+    }
+
+    .marquee-track img {
+      height: 360px;      /* stops stretching */
+      width: auto;        /* keep proportions */
+      object-fit: cover;
+      margin-right: 24px; /* gap between photos */
+      display: block;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
     }
 
     /* Mobile tweaks */
     @media (max-width: 600px) {
-      header {
-        padding-top: 36px;
+      header { padding: 44px 16px 32px; }
+      .names { font-size: 44px; }
+      nav { gap: 18px; }
+
+      .marquee-track img {
+        height: 250px;
+        margin-right: 16px;
       }
 
-      .names {
-        font-size: 42px;
-      }
-
-      nav {
-        gap: 18px;
+      .marquee-section {
+        margin: 40px 0 56px;
       }
     }
   </style>
@@ -91,52 +109,64 @@
 
 <body>
 
-<header>
-  <div class="names">Shannen &amp; Samarth</div>
-  <div id="countdown" class="countdown">Loading…</div>
+  <header>
+    <div class="names">Shannen &amp; Samarth</div>
+    <div id="countdown" class="countdown"></div>
 
-  <nav>
-    <a href="home.html">Home</a>
-    <a href="schedule.html">Schedule</a>
-    <a href="https://YOUR-ZOLA-OR-WITHJOY-URL/rsvp">RSVP</a>
-    <a href="https://YOUR-ZOLA-OR-WITHJOY-URL/faqs">FAQs</a>
-  </nav>
-</header>
+    <nav>
+      <a class="active" href="home.html">Home</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="rsvp.html">RSVP</a>
+      <a href="faqs.html">FAQs</a>
+    </nav>
+  </header>
 
-<main>
-  <!-- This space is intentionally empty until you add photos -->
-  <div class="placeholder">
-    Our story continues here ✨
-  </div>
-</main>
+  <!-- Marquee (replace photo1.jpg etc with your actual filenames) -->
+  <section class="marquee-section">
+    <div class="marquee-track" aria-label="Photo marquee">
+      <!-- First set -->
+      <img src="photo1.jpg" alt="Photo 1">
+      <img src="photo2.jpg" alt="Photo 2">
+      <img src="photo3.jpg" alt="Photo 3">
+      <img src="photo4.jpg" alt="Photo 4">
 
-<!-- Countdown Script -->
-<script>
-  // Wedding date: 27 February 2027 (Perth time)
-  const weddingDate = new Date("2027-02-27T15:00:00+08:00");
+      <!-- Duplicate set (for seamless loop) -->
+      <img src="photo1.jpg" alt="Photo 1 duplicate">
+      <img src="photo2.jpg" alt="Photo 2 duplicate">
+      <img src="photo3.jpg" alt="Photo 3 duplicate">
+      <img src="photo4.jpg" alt="Photo 4 duplicate">
+    </div>
+  </section>
 
-  const el = document.getElementById("countdown");
+  <!-- Countdown Script -->
+  <script>
+    // Wedding date: 27 February 2027 (Perth time)
+    const weddingDate = new Date("2027-02-27T15:00:00+08:00");
+    const el = document.getElementById("countdown");
 
-  function tick(){
-    const now = new Date();
-    const diff = weddingDate - now;
+    function pad(n){ return String(n).padStart(2, "0"); }
 
-    if (diff <= 0){
-      el.textContent = "TODAY 🤍";
-      return;
+    function tick() {
+      const now = new Date();
+      const diff = weddingDate - now;
+
+      if (diff <= 0) {
+        el.textContent = "TODAY 🤍";
+        return;
+      }
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / (60 * 60 * 24));
+      const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+      const mins = Math.floor((totalSeconds % (60 * 60)) / 60);
+
+      el.textContent = `${days} DAYS • ${pad(hours)} HOURS • ${pad(mins)} MINUTES`;
     }
 
-    const totalSeconds = Math.floor(diff / 1000);
-    const days = Math.floor(totalSeconds / (60 * 60 * 24));
-    const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
-    const mins = Math.floor((totalSeconds % (60 * 60)) / 60);
-
-    el.textContent = `${days} DAYS • ${hours} HOURS • ${mins} MINUTES`;
-  }
-
-  tick();
-  setInterval(tick, 1000);
-</script>
+    // Set immediately so it doesn’t “appear late”
+    tick();
+    setInterval(tick, 1000);
+  </script>
 
 </body>
 </html>
