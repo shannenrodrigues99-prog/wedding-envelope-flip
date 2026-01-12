@@ -44,7 +44,7 @@
       opacity: 0.85;
     }
 
-    /* Envelope container (ONLY thing that flips) */
+    /* Envelope (ONLY thing that flips) */
     .envelope{
       width: min(720px, 88vw);
       perspective: 1400px;
@@ -78,6 +78,19 @@
 
     .back{
       transform: rotateY(180deg);
+    }
+
+    /* MOBILE SPACING FIX */
+    @media (max-width: 768px) {
+      .page{
+        justify-content: center;
+        gap: 40px;
+        padding: 50px 20px 50px;
+      }
+
+      .bottom-instruction{
+        font-size: 20px;
+      }
     }
   </style>
 </head>
