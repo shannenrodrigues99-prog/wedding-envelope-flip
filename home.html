@@ -9,9 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -22,7 +20,7 @@
 
     header {
       text-align: center;
-      padding: 48px 16px 28px;
+      padding: 48px 16px 18px;
     }
 
     .names {
@@ -39,7 +37,7 @@
     }
 
     nav {
-      margin-top: 28px;
+      margin-top: 22px;
       display: flex;
       justify-content: center;
       gap: 28px;
@@ -59,31 +57,60 @@
       border-bottom-color: #2e2e2e;
     }
 
-    main {
-      max-width: 1100px;
-      margin: 40px auto 80px;
-      padding: 0 20px;
-      text-align: center;
+    /* ===== Marquee (photo loop) ===== */
+    .marquee {
+      height: calc(100vh - 210px); /* fills the rest of screen under header */
+      overflow: hidden;
+      width: 100%;
     }
 
-    .placeholder {
-      margin-top: 40px;
-      font-size: 14px;
-      opacity: 0.6;
+    .marquee-track {
+      height: 100%;
+      display: flex;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+
+    .marquee:hover .marquee-track {
+      animation-play-state: paused; /* pause on hover (nice on desktop) */
+    }
+
+    .marquee-item {
+      height: 100%;
+      width: min(560px, 86vw);
+      flex: 0 0 auto;
+    }
+
+    .photo {
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Placeholder blocks (replace later with real photos) */
+    .p1 { background: #d9d2cc; }
+    .p2 { background: #cfc6bf; }
+    .p3 { background: #e2dad3; }
+    .p4 { background: #c8bfb8; }
+    .p5 { background: #ded7d0; }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
     }
 
     /* Mobile tweaks */
     @media (max-width: 600px) {
-      header {
-        padding-top: 36px;
-      }
+      header { padding-top: 36px; }
+      .names { font-size: 42px; }
+      nav { gap: 18px; }
 
-      .names {
-        font-size: 42px;
+      .marquee {
+        height: calc(100vh - 190px);
       }
-
-      nav {
-        gap: 18px;
+      .marquee-item {
+        width: 88vw;
       }
     }
   </style>
@@ -103,12 +130,24 @@
   </nav>
 </header>
 
-<main>
-  <!-- This space is intentionally empty until you add photos -->
-  <div class="placeholder">
-    Our story continues here ✨
+<!-- Marquee photo loop under the header -->
+<section class="marquee">
+  <div class="marquee-track">
+    <!-- Set A -->
+    <div class="marquee-item"><div class="photo p1"></div></div>
+    <div class="marquee-item"><div class="photo p2"></div></div>
+    <div class="marquee-item"><div class="photo p3"></div></div>
+    <div class="marquee-item"><div class="photo p4"></div></div>
+    <div class="marquee-item"><div class="photo p5"></div></div>
+
+    <!-- Set B (duplicate for seamless loop) -->
+    <div class="marquee-item"><div class="photo p1"></div></div>
+    <div class="marquee-item"><div class="photo p2"></div></div>
+    <div class="marquee-item"><div class="photo p3"></div></div>
+    <div class="marquee-item"><div class="photo p4"></div></div>
+    <div class="marquee-item"><div class="photo p5"></div></div>
   </div>
-</main>
+</section>
 
 <!-- Countdown Script -->
 <script>
