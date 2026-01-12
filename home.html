@@ -1,236 +1,237 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Shannen & Samarth</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shannen & Samarth</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Alex+Brush&display=swap" rel="stylesheet">
 
-<style>
-  *{box-sizing:border-box}
+  <style>
+    * { box-sizing: border-box; }
 
-  body{
-    margin:0;
-    background:#f6f2ee;
-    font-family:Georgia,serif;
-    color:#2e2e2e;
-  }
+    body {
+      margin: 0;
+      background: #f4f2ee;
+      color: #1a1a1a;
+      font-family: "Cormorant Garamond", serif;
+    }
 
-  /* ---------- HEADER ---------- */
-  header{
-    text-align:center;
-    padding:48px 16px 18px;
-    position:relative;
-    z-index:20;
-  }
+    /* ===== HEADER ===== */
+    header {
+      text-align: center;
+      padding: 28px 16px 14px;
+    }
 
-  .names{
-    font-family:'Alex Brush',cursive;
-    font-size:56px;
-    line-height:1;
-  }
+    .names {
+      font-size: 42px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
 
-  .countdown{
-    margin-top:12px;
-    font-size:14px;
-    letter-spacing:.14em;
-    opacity:.75;
-  }
+    .countdown {
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 16px;
+    }
 
-  nav{
-    margin-top:22px;
-    display:flex;
-    justify-content:center;
-    gap:28px;
-    flex-wrap:wrap;
-  }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 26px;
+      font-size: 18px;
+      flex-wrap: wrap;
+    }
 
-  nav a{
-    text-decoration:none;
-    font-size:14px;
-    letter-spacing:.12em;
-    color:#2e2e2e;
-    border-bottom:1px solid transparent;
-    padding-bottom:4px;
-  }
-  nav a:hover{border-bottom-color:#2e2e2e}
+    nav a {
+      text-decoration: none;
+      color: #1a1a1a;
+      padding-bottom: 8px;
+      border-bottom: 2px solid transparent;
+    }
 
-  /* ---------- MARQUEE ---------- */
-  .marquee{
-    position:relative;
-    height:calc(100vh - 210px);
-    overflow:hidden;
-    width:100%;
-  }
+    nav a.active {
+      border-bottom-color: #1a1a1a;
+    }
 
-  .marquee-track{
-    height:100%;
-    display:flex;
-    width:max-content;
-    animation:scroll 28s linear infinite;
-  }
+    /* ===== MARQUEE ===== */
+    .marquee-shell {
+      position: relative;
+      overflow: hidden;
+      margin: 12px auto 40px;
+      width: 92vw;
+      max-width: 1200px;
+      border-radius: 24px;
+      background: #ddd;
+    }
 
-  .marquee-item{
-    height:100%;
-    width:min(560px,86vw);
-    flex:0 0 auto;
-  }
+    .marquee {
+      position: relative;
+      height: min(520px, 64vh);
+    }
 
-  .photo{
-    height:100%;
-    width:100%;
-    background-size:cover;
-    background-position:center;
-  }
+    .track {
+      display: flex;
+      width: max-content;
+      height: 100%;
+      animation: scroll 22s linear infinite;
+    }
 
-  /* placeholders (replace with photos later) */
-  .p1{background:#d9d2cc}
-  .p2{background:#cfc6bf}
-  .p3{background:#e2dad3}
-  .p4{background:#c8bfb8}
-  .p5{background:#ded7d0}
+    .slide {
+      flex: 0 0 auto;
+      width: min(560px, 90vw);
+      height: 100%;
+    }
 
-  @keyframes scroll{
-    from{transform:translateX(0)}
-    to{transform:translateX(-50%)}
-  }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-  /* ---------- MONOGRAM OVERLAY ---------- */
-  .mono-overlay{
-    position:absolute;
-    left:50%;
-    top:52%;
-    transform:translate(-50%,-50%);
-    width:min(520px,70vw);
-    z-index:10;
-    pointer-events:none;
-    filter: drop-shadow(0 10px 24px rgba(0,0,0,0.10));
-  }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
 
-  .mono-ss{
-    width:100%;
-    display:block;
-  }
+    /* ===== MONOGRAM OVERLAY ===== */
+    .mono-wrap {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+    }
 
-  .mono-amp{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-  }
+    .mono-box {
+      position: relative;
+      width: min(420px, 70vw);
+      aspect-ratio: 1 / 1;
+    }
 
-  /* AMPERSAND DRAW */
-  #ampPath{
-    fill:none;
-    stroke:#ffffff;          /* if you want dark, change to #2e2e2e */
-    stroke-width:12;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-  }
+    .ss-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
 
-  #ampPath.drawing{
-    animation: drawAmp 1.7s ease forwards;
-  }
+    /* IMPORTANT: keeps & centered and on-screen */
+    .amp-svg {
+      position: absolute;
+      inset: 12%;
+      width: 76%;
+      height: 76%;
+    }
 
-  @keyframes drawAmp{
-    to{ stroke-dashoffset: 0; }
-  }
+    #ampPath {
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 18;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
 
-  #ampPath.solid{
-    fill:#ffffff;            /* match stroke colour */
-    stroke-dasharray:none;
-    stroke-dashoffset:0;
-  }
-
-  /* ---------- MOBILE ---------- */
-  @media(max-width:600px){
-    header{padding-top:36px}
-    .names{font-size:42px}
-    nav{gap:18px}
-    .marquee{height:calc(100vh - 190px)}
-    .mono-overlay{width:min(420px,78vw)}
-  }
-</style>
+    /* ===== MOBILE ===== */
+    @media (max-width: 520px) {
+      .names { font-size: 32px; }
+      nav { font-size: 16px; gap: 18px; }
+      .marquee { height: 52vh; }
+      .mono-box { width: 78vw; }
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-  <div class="names">Shannen &amp; Samarth</div>
-  <div id="countdown" class="countdown">Loading…</div>
+  <h1 class="names">SHANNEN &amp; SAMARTH</h1>
+  <div class="countdown" id="countdown"></div>
 
   <nav>
-    <a href="home.html">Home</a>
+    <a class="active" href="home.html">Home</a>
     <a href="schedule.html">Schedule</a>
-    <a href="https://YOUR-ZOLA-OR-WITHJOY-URL/rsvp">RSVP</a>
-    <a href="https://YOUR-ZOLA-OR-WITHJOY-URL/faqs">FAQs</a>
+    <a href="faqs.html">FAQs</a>
+    <a href="registry.html">Registry</a>
   </nav>
 </header>
 
-<section class="marquee">
+<section class="marquee-shell">
+  <div class="marquee">
 
-  <!-- Monogram overlay -->
-  <div class="mono-overlay" aria-hidden="true">
-    <img class="mono-ss" src="ss-only.png" alt="">
+    <!-- PHOTO LOOP (replace later) -->
+    <div class="track">
+      <div class="slide"><img src="photo1.jpg" alt=""></div>
+      <div class="slide"><img src="photo2.jpg" alt=""></div>
+      <div class="slide"><img src="photo3.jpg" alt=""></div>
 
-    <!-- Ampersand SVG (transform REMOVED so it centers correctly) -->
-    <svg class="mono-amp" viewBox="0 0 2048 1931" aria-hidden="true">
-      <path id="ampPath" d="m0 0h25l34 4 22 5 16 6 14 7 12 9 10 9 11 14 8 16 5 16 2 11v25l-3 20-5 19-7 18-11 21-7 10-8 12-9 11-11 13-12 13-17 17h-2l-1 3-8 7-8 8-11 9-15 13-17 13-14 11-13 10-20 14-15 10-17 12-25 16-31 19-4 2 1 5 12 21 11 18 16 24 8 13 12 19 16 24 13 19 15 22 32 48 11 17 10 16 11 17 5 9v5l-20 20-7 8-9 10-10 10-8 7-10 10-8 7-6 5-5-1-5-8-13-25-8-16-28-52-18-34-11-20-8-17-11-19-8-16-14-27-19-39-11-24-5-12v-3l-21 12-28 17-15 9-22 13-26 16-15 10-26 17-16 11-18 13-21 16-11 8-13 11-11 9-11 10-8 7-16 15-5 6h-2l-2 4-8 8-8 10-11 13-8 11-20 28-12 20-11 22-7 17-8 27-3 14-2 20v19l2 20 7 23 9 19 8 11 11 12 2 4h2v2h2v2l4 2 11 9 15 9 20 9 21 6 23 4 11 1h40l23-3 30-6 23-6 34-12 26-11 22-11 21-12 16-10 17-11 16-11 15-11 16-12 16-13 10-9 11-9 15-13 16-15 10-9 13-12 57-57 7-8 11-12 8-8 7-8 13-13 7-8 9-10 7-8 3-4h2l2-4 11-12 9-11 7-7 7-8 14-17 12-13 8-10 18-20 8-10 10-11 9-11 11-13 10-12 9-11 8-9 9-11 8-9 8-10 10-11 11-14 8-9 11-14 9-9 1-2h2l2-4 11-13 9-10 14-15 9-11 15-16 62-62 8-7 14-12 11-10 11-9 15-12 17-13 16-12 13-9 34-22 25-14 29-14 28-10 24-7 23-4 35-4h14l21 2 25 5 19 7 16 8 10 9 8 7 12 12 10 14 8 17 4 14 1 6v22l-4 15-8 15-12 13-11 7-11 4h-16l-15-4-10-6-7-7-5-10-3-11 1-9 4-9 6-9 9-11 5-10 2-7v-10l-3-11-7-11-9-8-10-6-11-4-14-3-10-1h-27l-25 5-26 7-25 10-25 12-24 13-23 14-19 13-19 14-10 8-16 13-14 12-10 9-13 12-20 18-31 31-9 11-12 12-7 8-11 11-9 11-14 15-9 11-9 10-9 11-10 11-8 10-9 10-8 10-12 14-8 10-12 14-9 11-12 13-6 8-12 14-11 13-9 11-13 15-10 11-11 14-12 13-9 11-12 13-9 10-9 11-12 13-16 17-9 11-11 11-7 8-11 11-7 8-21 21-9 11-61 61-11 9-16 15-8 7-16 13-12 10-13 10-17 13-19 13-11 8-22 14-13 8-32 17-16 8-15 7-31 12-21 7-27 7-25 5-23 3-23 2h-24l-32-3-24-4-24-7-25-9-23-12-11-7-14-10-14-12-9-10-13-17-12-21-11-33-2-12-1-11v-27l2-21 8-29 7-20 14-29 6-11 12-19 11-15 10-13 7-8 12-13 7-8h2l2-4h2l2-4 13-12 17-16 10-9 14-11 18-14 11-8 18-13 19-13 34-23 19-12 22-13 20-12 24-14 16-9 19-11 23-12 21-12 15-8h2l-2-9-9-24-8-27-6-28-4-27-2-24v-29l2-23 4-24 5-22 7-24 10-23 14-26 16-24 14-18 23-23 11-9 15-12 25-15 20-9 28-9 19-4 21-3zm-6 27-23 3-19 5-20 8-17 9-15 10-16 13-12 12-9 11-8 11-13 21-9 20-10 26-5 22-3 22-1 14v28l2 20 4 24 7 27 12 34 12 27 4 1 10-7 22-13 39-26 18-13 9-7 13-10 14-11 11-10 11-9 10-9 22-22 9-11 11-13 13-19 9-15 10-19 11-33 4-24v-9l-3-23-5-15-6-12-9-11-10-9-14-8-21-7-20-3z"></path>
-    </svg>
+      <div class="slide"><img src="photo1.jpg" alt=""></div>
+      <div class="slide"><img src="photo2.jpg" alt=""></div>
+      <div class="slide"><img src="photo3.jpg" alt=""></div>
+    </div>
+
+    <!-- MONOGRAM -->
+    <div class="mono-wrap">
+      <div class="mono-box">
+
+        <!-- SOLID S S IMAGE -->
+        <!-- Upload your file as ss-solid.png -->
+        <img src="ss-solid.png" class="ss-img" alt="">
+
+        <!-- HAND-DRAWN AMPERSAND -->
+        <svg class="amp-svg" viewBox="0 0 1024 1024" preserveAspectRatio="xMidYMid meet">
+          <path id="ampPath"
+            d="m0 0h22l14 3 12 5 9 7 8 9 4 8 2 9v16l-4 15-8 17-10 14-9 11-7 8-5 5-13 12-14 12-20 15-15 10-21 13-2 1 2 5 11 18 10 15 29 43 11 17 10 16 18-18 7-8 7-7 7-8 9-10 9-11 12-13 9-11 11-12 9-11 12-13 7-8 11-12 14-15 20-20 8-7 13-11 16-12 15-10 18-10 16-7 18-5 8-1h21l15 4 9 5 8 7 7 11 3 12-1 11-5 10-8 7-9 2-6-2-7-6-2-8 3-7 7-6 2-10-2-7-4-5-6-4-10-3h-17l-16 4-15 6-17 9-20 14-16 13-20 18-30 30-7 8-9 10-9 11-12 13-9 11-12 13-9 11-10 11-9 11-14 15-7 8-24 24 2 6 10 19 12 25 10 26 7 23 5 22 3 19 1 10v39l-3 24-6 26-8 24-8 18-12 23-16 24-8 10-12 14-15 16-8 7-12 11-17 13-15 10-21 12-15 8-25 10-24 8-29 7-30 4-14 1h-24l-25-2-23-4-24-7-16-6-16-8-11-6-13-9-13-11-13-13-10-13-8-13-9-19-6-21-2-15v-23l2-14 5-18 8-18 8-13 10-13 10-11 11-9 12-9 16-9 12-6 18-6 19-4 11-1h14" />
+        </svg>
+
+      </div>
+    </div>
+
   </div>
-
-  <!-- Photos -->
-  <div class="marquee-track">
-    <div class="marquee-item"><div class="photo p1"></div></div>
-    <div class="marquee-item"><div class="photo p2"></div></div>
-    <div class="marquee-item"><div class="photo p3"></div></div>
-    <div class="marquee-item"><div class="photo p4"></div></div>
-    <div class="marquee-item"><div class="photo p5"></div></div>
-
-    <div class="marquee-item"><div class="photo p1"></div></div>
-    <div class="marquee-item"><div class="photo p2"></div></div>
-    <div class="marquee-item"><div class="photo p3"></div></div>
-    <div class="marquee-item"><div class="photo p4"></div></div>
-    <div class="marquee-item"><div class="photo p5"></div></div>
-  </div>
-
 </section>
 
 <script>
   /* COUNTDOWN */
-  const weddingDate = new Date("2027-02-27T15:00:00+08:00");
-  const el = document.getElementById("countdown");
+  const target = new Date("2027-02-27T00:00:00");
+  const cd = document.getElementById("countdown");
 
-  function tick(){
+  function updateCountdown() {
     const now = new Date();
-    const diff = weddingDate - now;
-    if(diff <= 0){ el.textContent = "TODAY 🤍"; return; }
+    const diff = target - now;
 
-    const totalSeconds = Math.floor(diff/1000);
-    const days = Math.floor(totalSeconds / 86400);
-    const hours = Math.floor((totalSeconds % 86400) / 3600);
-    const mins = Math.floor((totalSeconds % 3600) / 60);
+    if (diff <= 0) {
+      cd.textContent = "TODAY • PERTH, WA";
+      return;
+    }
 
-    el.textContent = `${days} DAYS • ${hours} HOURS • ${mins} MINUTES`;
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+
+    cd.textContent =
+      `${d} DAYS • ${h} HOURS • ${m} MINUTES • FEBRUARY 27, 2027 • PERTH, WA`;
   }
-  tick();
-  setInterval(tick, 1000);
 
-  /* AMPERSAND DRAW */
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  /* AMPERSAND DRAW ANIMATION */
   window.addEventListener("load", () => {
-    const amp = document.getElementById("ampPath");
-    if(!amp) return;
+    const p = document.getElementById("ampPath");
+    if (!p) return;
 
-    const len = amp.getTotalLength();
-    amp.style.strokeDasharray = len;
-    amp.style.strokeDashoffset = len;
-
-    amp.classList.add("drawing");
-
-    setTimeout(() => {
-      amp.classList.add("solid");
-    }, 1750);
+    const len = p.getTotalLength();
+    p.style.strokeDasharray = len;
+    p.style.strokeDashoffset = len;
+    p.getBoundingClientRect();
+    p.style.transition = "stroke-dashoffset 1.8s ease";
+    p.style.strokeDashoffset = "0";
   });
 </script>
 
