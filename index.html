@@ -120,19 +120,17 @@
   </div>
 
   <script>
-    const env = document.querySelector(".envelope");
-    let clicked = false;
+  const env = document.querySelector(".envelope");
+  let clicked = false;
 
-    env.addEventListener("click", () => {
-      if (clicked) return;
-      clicked = true;
+  env.addEventListener("click", () => {
+    if (clicked) return;
+    clicked = true;
 
-      env.classList.add("flipped");
+    env.classList.add("flipped");
 
-      setTimeout(() => {
-        window.location.assign("https://www.google.com/");
-      }, 1300);
-    });
-  </script>
-</body>
-</html>
+    setTimeout(() => {
+      window.location.assign("home.html");
+    }, 1300);
+  });
+</script>
