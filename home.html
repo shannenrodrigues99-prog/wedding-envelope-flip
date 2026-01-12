@@ -21,6 +21,8 @@
     header {
       text-align: center;
       padding: 48px 16px 18px;
+      position: relative;
+      z-index: 20;
     }
 
     .names {
@@ -59,7 +61,8 @@
 
     /* ===== Marquee (photo loop) ===== */
     .marquee {
-      height: calc(100vh - 210px); /* fills the rest of screen under header */
+      position: relative;                 /* REQUIRED so overlay sits correctly */
+      height: calc(100vh - 210px);        /* fills screen under header */
       overflow: hidden;
       width: 100%;
     }
@@ -72,7 +75,7 @@
     }
 
     .marquee:hover .marquee-track {
-      animation-play-state: paused; /* pause on hover (nice on desktop) */
+      animation-play-state: paused;       /* pause on hover (desktop) */
     }
 
     .marquee-item {
@@ -88,7 +91,7 @@
       background-position: center;
     }
 
-    /* Placeholder blocks (replace later with real photos) */
+    /* Placeholder colours (replace with your real photos later) */
     .p1 { background: #d9d2cc; }
     .p2 { background: #cfc6bf; }
     .p3 { background: #e2dad3; }
@@ -100,17 +103,67 @@
       to   { transform: translateX(-50%); }
     }
 
+    /* ===== Monogram overlay (on top of marquee, like Zola) ===== */
+    .mono-overlay{
+      position: absolute;
+      left: 50%;
+      top: 52%;
+      transform: translate(-50%, -50%);
+      width: min(520px, 70vw);
+      z-index: 10;
+      pointer-events: none;
+      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.08));
+    }
+
+    .mono-ss{
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .mono-amp{
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Draw animation for & (SVG PATH) */
+    #ampPath{
+      fill: none;
+      stroke: #ffffff;          /* change to #111 if your monogram is dark */
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+
+      stroke-dasharray: 2200;
+      stroke-dashoffset: 2200;
+      animation: drawAmp 1.6s ease forwards;
+    }
+
+    @keyframes drawAmp{
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* After draw finishes, make it solid */
+    #ampPath.solid{
+      fill: #ffffff;            /* same as stroke */
+      stroke-dasharray: none;
+      stroke-dashoffset: 0;
+    }
+
     /* Mobile tweaks */
     @media (max-width: 600px) {
       header { padding-top: 36px; }
       .names { font-size: 42px; }
       nav { gap: 18px; }
 
-      .marquee {
-        height: calc(100vh - 190px);
-      }
-      .marquee-item {
-        width: 88vw;
+      .marquee { height: calc(100vh - 190px); }
+      .marquee-item { width: 88vw; }
+
+      .mono-overlay{
+        top: 50%;
+        width: min(420px, 78vw);
       }
     }
   </style>
@@ -130,8 +183,19 @@
   </nav>
 </header>
 
-<!-- Marquee photo loop under the header -->
 <section class="marquee">
+
+  <!-- Monogram overlay -->
+  <div class="mono-overlay" aria-hidden="true">
+    <!-- 1) Static SS image (upload ss-only.png to your repo) -->
+    <img class="mono-ss" src="ss-only.png" alt="">
+
+    <!-- 2) Animated & (paste your ampersand path into d="...") -->
+    <svg class="mono-amp" viewBox="0 0 1000 1000" aria-hidden="true">
+      <path id="ampPath" d="PASTE_AMPERSAND_PATH_D_HERE"></path>
+    </svg>
+  </div>
+
   <div class="marquee-track">
     <!-- Set A -->
     <div class="marquee-item"><div class="photo p1"></div></div>
@@ -153,7 +217,6 @@
 <script>
   // Wedding date: 27 February 2027 (Perth time)
   const weddingDate = new Date("2027-02-27T15:00:00+08:00");
-
   const el = document.getElementById("countdown");
 
   function tick(){
@@ -175,6 +238,13 @@
 
   tick();
   setInterval(tick, 1000);
+
+  // Make ampersand solid after draw finishes
+  window.addEventListener("load", () => {
+    const amp = document.getElementById("ampPath");
+    if (!amp) return;
+    setTimeout(() => amp.classList.add("solid"), 1650);
+  });
 </script>
 
 </body>
