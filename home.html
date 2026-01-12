@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shannen & Samarth</title>
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Alex+Brush&display=swap" rel="stylesheet">
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -19,19 +22,17 @@
       font-family: "Cormorant Garamond", serif;
     }
 
+    /* ===== HEADER ===== */
     header {
       text-align: center;
-      padding: 28px 16px 14px;
+      padding: 32px 16px 18px;
     }
 
-    /* If you prefer the Alex Brush look like your screenshot, swap these: */
     .names {
       font-family: "Alex Brush", cursive;
       font-size: 58px;
-      margin: 0 0 6px;
+      margin: 0 0 8px;
       font-weight: 400;
-      letter-spacing: 0;
-      text-transform: none;
     }
 
     .countdown {
@@ -39,22 +40,22 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: #555;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     nav {
       display: flex;
       justify-content: center;
-      gap: 28px;
+      gap: 30px;
       font-size: 18px;
-      flex-wrap: wrap;
       letter-spacing: 0.06em;
+      flex-wrap: wrap;
     }
 
     nav a {
       text-decoration: none;
       color: #1a1a1a;
-      padding-bottom: 10px;
+      padding-bottom: 8px;
       border-bottom: 2px solid transparent;
     }
 
@@ -64,18 +65,16 @@
 
     /* ===== MARQUEE ===== */
     .marquee-shell {
-      position: relative;
-      overflow: hidden;
-      margin: 12px auto 40px;
       width: 92vw;
       max-width: 1200px;
-      border-radius: 24px;
+      margin: 20px auto 50px;
+      overflow: hidden;
+      border-radius: 26px;
       background: #ddd;
     }
 
     .marquee {
-      position: relative;
-      height: min(560px, 66vh);
+      height: min(560px, 65vh);
     }
 
     .track {
@@ -86,9 +85,9 @@
     }
 
     .slide {
-      flex: 0 0 auto;
       width: min(560px, 90vw);
       height: 100%;
+      flex: 0 0 auto;
     }
 
     .slide img {
@@ -103,139 +102,81 @@
       to   { transform: translateX(-50%); }
     }
 
-    /* ===== MONOGRAM OVERLAY (FIXED CENTERING) ===== */
-    .mono-wrap {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      pointer-events: none;
-    }
-
-    .mono-box {
-      position: relative;
-      width: min(420px, 70vw);
-      aspect-ratio: 1 / 1;
-    }
-
-    /* Force the PNG to be centered no matter how its transparent canvas is */
-    .ss-img {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-
-    /* Center the ampersand and keep it INSIDE the SS */
-    .amp-svg {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 72%;
-      height: 72%;
-    }
-
-    #ampPath {
-      fill: none;
-      stroke: #ffffff;
-      stroke-width: 18;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
+    /* ===== MOBILE ===== */
     @media (max-width: 520px) {
-      .names { font-size: 44px; }
-      nav { font-size: 16px; gap: 18px; }
-      .marquee { height: 54vh; }
-      .mono-box { width: 78vw; }
-      .amp-svg { width: 74%; height: 74%; }
+      .names {
+        font-size: 44px;
+      }
+
+      nav {
+        font-size: 16px;
+        gap: 18px;
+      }
+
+      .marquee {
+        height: 54vh;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <h1 class="names">Shannen &amp; Samarth</h1>
-  <div class="countdown" id="countdown"></div>
+  <!-- HEADER -->
+  <header>
+    <h1 class="names">Shannen &amp; Samarth</h1>
+    <div class="countdown" id="countdown"></div>
 
-  <nav>
-    <a class="active" href="home.html">Home</a>
-    <a href="schedule.html">Schedule</a>
-    <a href="rsvp.html">RSVP</a>
-    <a href="faqs.html">FAQs</a>
-  </nav>
-</header>
+    <nav>
+      <a class="active" href="home.html">Home</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="rsvp.html">RSVP</a>
+      <a href="faqs.html">FAQs</a>
+    </nav>
+  </header>
 
-<section class="marquee-shell">
-  <div class="marquee">
+  <!-- MARQUEE -->
+  <section class="marquee-shell">
+    <div class="marquee">
+      <div class="track">
+        <!-- Replace with your real photos -->
+        <div class="slide"><img src="photo1.jpg" alt=""></div>
+        <div class="slide"><img src="photo2.jpg" alt=""></div>
+        <div class="slide"><img src="photo3.jpg" alt=""></div>
 
-    <!-- PHOTOS (replace photo1.jpg etc later) -->
-    <div class="track">
-      <div class="slide"><img src="photo1.jpg" alt=""></div>
-      <div class="slide"><img src="photo2.jpg" alt=""></div>
-      <div class="slide"><img src="photo3.jpg" alt=""></div>
-
-      <div class="slide"><img src="photo1.jpg" alt=""></div>
-      <div class="slide"><img src="photo2.jpg" alt=""></div>
-      <div class="slide"><img src="photo3.jpg" alt=""></div>
-    </div>
-
-    <!-- MONOGRAM -->
-    <div class="mono-wrap">
-      <div class="mono-box">
-        <img src="ss-solid.png" class="ss-img" alt="SS Monogram">
-
-        <svg class="amp-svg" viewBox="0 0 1024 1024" preserveAspectRatio="xMidYMid meet">
-          <path id="ampPath"
-            d="m0 0h22l14 3 12 5 9 7 8 9 4 8 2 9v16l-4 15-8 17-10 14-9 11-7 8-5 5-13 12-14 12-20 15-15 10-21 13-2 1 2 5 11 18 10 15 29 43 11 17 10 16 18-18 7-8 7-7 7-8 9-10 9-11 12-13 9-11 11-12 9-11 12-13 7-8 11-12 14-15 20-20 8-7 13-11 16-12 15-10 18-10 16-7 18-5 8-1h21l15 4 9 5 8 7 7 11 3 12-1 11-5 10-8 7-9 2-6-2-7-6-2-8 3-7 7-6 2-10-2-7-4-5-6-4-10-3h-17l-16 4-15 6-17 9-20 14-16 13-20 18-30 30-7 8-9 10-9 11-12 13-9 11-12 13-9 11-10 11-9 11-14 15-7 8-24 24 2 6 10 19 12 25 10 26 7 23 5 22 3 19 1 10v39l-3 24-6 26-8 24-8 18-12 23-16 24-8 10-12 14-15 16-8 7-12 11-17 13-15 10-21 12-15 8-25 10-24 8-29 7-30 4-14 1h-24l-25-2-23-4-24-7-16-6-16-8-11-6-13-9-13-11-13-13-10-13-8-13-9-19-6-21-2-15v-23l2-14 5-18 8-18 8-13 10-13 10-11 11-9 12-9 16-9 12-6 18-6 19-4 11-1h14" />
-        </svg>
+        <!-- Duplicate for seamless loop -->
+        <div class="slide"><img src="photo1.jpg" alt=""></div>
+        <div class="slide"><img src="photo2.jpg" alt=""></div>
+        <div class="slide"><img src="photo3.jpg" alt=""></div>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
+  <!-- COUNTDOWN SCRIPT -->
+  <script>
+    const targetDate = new Date("2027-02-27T00:00:00");
+    const countdownEl = document.getElementById("countdown");
 
-<script>
-  // Countdown to 27 Feb 2027
-  const target = new Date("2027-02-27T00:00:00");
-  const cd = document.getElementById("countdown");
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
 
-  function updateCountdown() {
-    const now = new Date();
-    const diff = target - now;
+      if (diff <= 0) {
+        countdownEl.textContent = "TODAY";
+        return;
+      }
 
-    if (diff <= 0) {
-      cd.textContent = "TODAY";
-      return;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+      countdownEl.textContent =
+        `${days} DAYS • ${hours} HOURS • ${minutes} MINUTES`;
     }
 
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const m = Math.floor((diff / (1000 * 60)) % 60);
-
-    cd.textContent = `${d} DAYS • ${h} HOURS • ${m} MINUTES`;
-  }
-
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-
-  // Draw the ampersand
-  window.addEventListener("load", () => {
-    const p = document.getElementById("ampPath");
-    const len = p.getTotalLength();
-    p.style.strokeDasharray = len;
-    p.style.strokeDashoffset = len;
-    p.getBoundingClientRect();
-    p.style.transition = "stroke-dashoffset 1.8s ease";
-    p.style.strokeDashoffset = "0";
-  });
-</script>
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
 
 </body>
 </html>
