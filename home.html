@@ -15,20 +15,21 @@
       --bg: #ffffff;
       --ink: #111;
       --muted: #666;
-      --padY: 26px;   /* spacing above/below marquee */
+      --marqueePadTop: 22px;
+      --marqueePadBottom: 36px; /* 👈 SPACE BELOW PHOTOS */
     }
 
     html, body {
       height: 100vh;
-      overflow: hidden;      /* no scroll */
+      overflow: hidden;       /* no scroll */
       background: var(--bg);
     }
 
     body {
       display: flex;
       flex-direction: column;
-      color: var(--ink);
       font-family: serif;
+      color: var(--ink);
     }
 
     /* ===== HEADER ===== */
@@ -76,16 +77,16 @@
       border-bottom-color: var(--ink);
     }
 
-    /* ===== MARQUEE AREA (spacing) ===== */
+    /* ===== MARQUEE WRAPPER ===== */
     .marquee-wrap{
       flex: 1 1 auto;
-      padding: var(--padY) 0;        /* spacing above/below */
+      padding: var(--marqueePadTop) 0 var(--marqueePadBottom);
       display: flex;
       align-items: stretch;
       background: var(--bg);
     }
 
-    /* ===== ZOLA-STYLE MARQUEE ===== */
+    /* ===== MARQUEE ===== */
     .marquee{
       position: relative;
       width: 100vw;
@@ -93,18 +94,16 @@
       overflow: hidden;
       cursor: grab;
       user-select: none;
-      -webkit-user-select: none;
-      touch-action: pan-y; /* allow vertical page gestures even though we hide scroll */
     }
     .marquee:active { cursor: grabbing; }
 
-    /* A subtle “premium” fade at the edges like Zola */
+    /* Zola-style fade edges */
     .marquee::before,
     .marquee::after{
       content:"";
       position:absolute;
       top:0; bottom:0;
-      width: 64px;
+      width: 60px;
       z-index: 3;
       pointer-events:none;
     }
@@ -117,46 +116,57 @@
       background: linear-gradient(to left, var(--bg), rgba(255,255,255,0));
     }
 
-    /* Track */
+    /* ===== TRACK ===== */
     .track{
       display: flex;
-      align-items: stretch;
       height: 100%;
+      width: max-content;
       will-change: transform;
       transform: translate3d(0,0,0);
     }
 
-    /* Panels with different “shapes” */
+    /* ===== PANELS ===== */
     .panel{
       flex: 0 0 auto;
       height: 100%;
       overflow: hidden;
     }
 
-    /* widths chosen so there are NO gaps and it feels editorial */
-    .w-wide   { width: 44vw; }
-    .w-med    { width: 32vw; }
-    .w-narrow { width: 24vw; }
+    /* Different editorial widths */
+    .wide   { width: 44vw; }
+    .med    { width: 32vw; }
+    .narrow { width: 24vw; }
 
     .panel img{
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: cover;   /* prevents stretching */
       display: block;
     }
 
-    /* Mobile: one image at a time feels like Zola swipe */
+    /* ===== MOBILE ===== */
     @media (max-width: 768px){
-      :root{ --padY: 18px; }
+      :root{
+        --marqueePadTop: 16px;
+        --marqueePadBottom: 24px;
+      }
+
       header{ padding: 22px 14px 14px; }
-      .w-wide, .w-med, .w-narrow { width: 100vw; }
-      .marquee::before, .marquee::after { width: 36px; }
+      nav{ gap: 18px; }
+
+      .wide, .med, .narrow { width: 100vw; }
+
+      .marquee::before,
+      .marquee::after{
+        width: 36px;
+      }
     }
   </style>
 </head>
 
 <body>
 
+  <!-- HEADER -->
   <header>
     <div class="names">Shannen &amp; Samarth</div>
     <div id="countdown"></div>
@@ -169,151 +179,70 @@
     </nav>
   </header>
 
+  <!-- MARQUEE -->
   <div class="marquee-wrap">
     <section class="marquee" id="marquee">
       <div class="track" id="track">
-        <!-- BASE SET (you can add more panels later) -->
-        <div class="panel w-wide"><img src="photo1.jpg" alt=""></div>
-        <div class="panel w-med"><img src="photo2.jpg" alt=""></div>
-        <div class="panel w-narrow"><img src="photo3.jpg" alt=""></div>
-        <div class="panel w-med"><img src="photo4.jpg" alt=""></div>
+        <!-- BASE SET -->
+        <div class="panel wide"><img src="photo1.jpg" alt=""></div>
+        <div class="panel med"><img src="photo2.jpg" alt=""></div>
+        <div class="panel narrow"><img src="photo3.jpg" alt=""></div>
+        <div class="panel med"><img src="photo4.jpg" alt=""></div>
       </div>
     </section>
   </div>
 
+  <!-- SCRIPTS -->
   <script>
-    /* ===== Countdown (instant, “stationary” feel) ===== */
+    /* ===== COUNTDOWN ===== */
     const weddingDate = new Date("February 27, 2027 00:00:00").getTime();
     const countdownEl = document.getElementById("countdown");
 
     function updateCountdown(){
       const diff = weddingDate - Date.now();
       if (diff <= 0) { countdownEl.textContent = "TODAY"; return; }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor((diff / (1000*60*60)) % 24);
+      const minutes = Math.floor((diff / (1000*60)) % 60);
+
       countdownEl.textContent = `${days} days • ${hours} hours • ${minutes} minutes`;
     }
     updateCountdown();
     setInterval(updateCountdown, 60000);
 
-    /* ===== Zola-style marquee: seamless loop + drag/swipe ===== */
+    /* ===== SEAMLESS ZOLA-STYLE LOOP ===== */
     const marquee = document.getElementById("marquee");
     const track = document.getElementById("track");
 
-    // Duplicate content until it’s wide enough to loop seamlessly
-    function ensureLoopWidth() {
-      const minWidth = marquee.clientWidth * 2.2; // enough to cover during drag
+    function buildLoop(){
+      const minWidth = marquee.clientWidth * 2.5;
       while (track.scrollWidth < minWidth) {
         track.innerHTML += track.innerHTML;
       }
     }
-    ensureLoopWidth();
+    buildLoop();
+
     window.addEventListener("resize", () => {
-      // reset and rebuild duplicates on resize
-      const base = track.querySelectorAll(".panel");
-      const baseHTML = Array.from(base).slice(0, 4).map(n => n.outerHTML).join("");
-      track.innerHTML = baseHTML;
-      ensureLoopWidth();
+      const basePanels = Array.from(track.children).slice(0, 4).map(p => p.outerHTML).join("");
+      track.innerHTML = basePanels;
+      buildLoop();
       x = 0;
     });
 
-    let x = 0;               // current translateX
-    let speed = 0.55;        // Zola-like slow glide (increase = faster)
-    let paused = false;
+    let x = 0;
+    const speed = 0.45;  /* slow, luxe Zola pace */
 
-    // Drag state
-    let isDown = false;
-    let startX = 0;
-    let startOffset = 0;
-    let velocity = 0;
-    let lastMoveX = 0;
-    let lastTime = 0;
+    function animate(){
+      x -= speed;
 
-    function loop() {
-      if (!paused && !isDown) {
-        x -= speed;
-      }
-
-      // Seamless wrap: when we move past half the track, reset
       const half = track.scrollWidth / 2;
       if (x <= -half) x += half;
-      if (x >= 0) x -= half;
 
       track.style.transform = `translate3d(${x}px,0,0)`;
-
-      // Inertia after drag
-      if (!isDown && Math.abs(velocity) > 0.01) {
-        x += velocity;
-        velocity *= 0.95;
-      } else if (!isDown) {
-        velocity = 0;
-      }
-
-      requestAnimationFrame(loop);
+      requestAnimationFrame(animate);
     }
-    requestAnimationFrame(loop);
-
-    // Hover pause (desktop)
-    marquee.addEventListener("mouseenter", () => paused = true);
-    marquee.addEventListener("mouseleave", () => paused = false);
-
-    // Mouse drag
-    marquee.addEventListener("mousedown", (e) => {
-      isDown = true;
-      startX = e.clientX;
-      startOffset = x;
-      velocity = 0;
-      lastMoveX = e.clientX;
-      lastTime = performance.now();
-    });
-
-    window.addEventListener("mousemove", (e) => {
-      if (!isDown) return;
-      const dx = e.clientX - startX;
-      x = startOffset + dx;
-
-      const now = performance.now();
-      const dt = now - lastTime;
-      if (dt > 0) {
-        velocity = (e.clientX - lastMoveX) / dt * 16; // normalize to ~60fps
-        lastMoveX = e.clientX;
-        lastTime = now;
-      }
-    });
-
-    window.addEventListener("mouseup", () => {
-      isDown = false;
-    });
-
-    // Touch drag (mobile)
-    marquee.addEventListener("touchstart", (e) => {
-      isDown = true;
-      startX = e.touches[0].clientX;
-      startOffset = x;
-      velocity = 0;
-      lastMoveX = startX;
-      lastTime = performance.now();
-    }, { passive: true });
-
-    marquee.addEventListener("touchmove", (e) => {
-      if (!isDown) return;
-      const cx = e.touches[0].clientX;
-      const dx = cx - startX;
-      x = startOffset + dx;
-
-      const now = performance.now();
-      const dt = now - lastTime;
-      if (dt > 0) {
-        velocity = (cx - lastMoveX) / dt * 16;
-        lastMoveX = cx;
-        lastTime = now;
-      }
-    }, { passive: true });
-
-    marquee.addEventListener("touchend", () => {
-      isDown = false;
-    });
+    animate();
   </script>
 
 </body>
