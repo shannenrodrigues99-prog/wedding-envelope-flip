@@ -8,145 +8,151 @@
 <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
+  *{box-sizing:border-box}
 
-body{
-  margin:0;
-  background:#f6f2ee;
-  font-family:Georgia,serif;
-  color:#2e2e2e;
-}
+  body{
+    margin:0;
+    background:#f6f2ee;
+    font-family:Georgia,serif;
+    color:#2e2e2e;
+  }
 
-/* ---------- HEADER ---------- */
-header{
-  text-align:center;
-  padding:48px 16px 18px;
-  position:relative;
-  z-index:20;
-}
+  /* ---------- HEADER ---------- */
+  header{
+    text-align:center;
+    padding:48px 16px 18px;
+    position:relative;
+    z-index:20;
+  }
 
-.names{
-  font-family:'Alex Brush',cursive;
-  font-size:56px;
-  line-height:1;
-}
+  .names{
+    font-family:'Alex Brush',cursive;
+    font-size:56px;
+    line-height:1;
+  }
 
-.countdown{
-  margin-top:12px;
-  font-size:14px;
-  letter-spacing:.14em;
-  opacity:.75;
-}
+  .countdown{
+    margin-top:12px;
+    font-size:14px;
+    letter-spacing:.14em;
+    opacity:.75;
+  }
 
-nav{
-  margin-top:22px;
-  display:flex;
-  justify-content:center;
-  gap:28px;
-  flex-wrap:wrap;
-}
+  nav{
+    margin-top:22px;
+    display:flex;
+    justify-content:center;
+    gap:28px;
+    flex-wrap:wrap;
+  }
 
-nav a{
-  text-decoration:none;
-  font-size:14px;
-  letter-spacing:.12em;
-  color:#2e2e2e;
-  border-bottom:1px solid transparent;
-  padding-bottom:4px;
-}
+  nav a{
+    text-decoration:none;
+    font-size:14px;
+    letter-spacing:.12em;
+    color:#2e2e2e;
+    border-bottom:1px solid transparent;
+    padding-bottom:4px;
+  }
+  nav a:hover{border-bottom-color:#2e2e2e}
 
-nav a:hover{border-bottom-color:#2e2e2e}
+  /* ---------- MARQUEE ---------- */
+  .marquee{
+    position:relative;
+    height:calc(100vh - 210px);
+    overflow:hidden;
+    width:100%;
+  }
 
-/* ---------- MARQUEE ---------- */
-.marquee{
-  position:relative;
-  height:calc(100vh - 210px);
-  overflow:hidden;
-  width:100%;
-}
+  .marquee-track{
+    height:100%;
+    display:flex;
+    width:max-content;
+    animation:scroll 28s linear infinite;
+  }
 
-.marquee-track{
-  height:100%;
-  display:flex;
-  width:max-content;
-  animation:scroll 28s linear infinite;
-}
+  .marquee-item{
+    height:100%;
+    width:min(560px,86vw);
+    flex:0 0 auto;
+  }
 
-.marquee-item{
-  height:100%;
-  width:min(560px,86vw);
-  flex:0 0 auto;
-}
+  .photo{
+    height:100%;
+    width:100%;
+    background-size:cover;
+    background-position:center;
+  }
 
-.photo{
-  height:100%;
-  width:100%;
-  background-size:cover;
-  background-position:center;
-}
+  /* placeholders */
+  .p1{background:#d9d2cc}
+  .p2{background:#cfc6bf}
+  .p3{background:#e2dad3}
+  .p4{background:#c8bfb8}
+  .p5{background:#ded7d0}
 
-/* placeholders */
-.p1{background:#d9d2cc}
-.p2{background:#cfc6bf}
-.p3{background:#e2dad3}
-.p4{background:#c8bfb8}
-.p5{background:#ded7d0}
+  @keyframes scroll{
+    from{transform:translateX(0)}
+    to{transform:translateX(-50%)}
+  }
 
-@keyframes scroll{
-  from{transform:translateX(0)}
-  to{transform:translateX(-50%)}
-}
+  /* ---------- MONOGRAM OVERLAY ---------- */
+  .mono-overlay{
+    position:absolute;
+    left:50%;
+    top:52%;
+    transform:translate(-50%,-50%);
+    width:min(520px,70vw);
+    z-index:10;
+    pointer-events:none;
+    filter: drop-shadow(0 10px 24px rgba(0,0,0,0.10));
+  }
 
-/* ---------- MONOGRAM OVERLAY ---------- */
-.mono-overlay{
-  position:absolute;
-  left:50%;
-  top:52%;
-  transform:translate(-50%,-50%);
-  width:min(520px,70vw);
-  z-index:10;
-  pointer-events:none;
-}
+  .mono-ss{
+    width:100%;
+    display:block;
+  }
 
-.mono-ss{
-  width:100%;
-  display:block;
-}
+  .mono-amp{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+  }
 
-.mono-amp{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-}
+  /* The drawn stroke (we set dasharray/dashoffset in JS) */
+  #ampPath{
+    fill:none;
+    stroke:#ffffff;
+    stroke-width:12;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
 
-/* AMPERSAND DRAW */
-#ampPath{
-  fill:none;
-  stroke:#ffffff;
-  stroke-width:12;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  stroke-dasharray:4000;
-  stroke-dashoffset:4000;
-  animation:draw 1.8s ease forwards;
-}
+  /* draw animation class */
+  #ampPath.drawing{
+    animation: drawAmp 1.7s ease forwards;
+  }
 
-@keyframes draw{
-  to{stroke-dashoffset:0}
-}
+  @keyframes drawAmp{
+    to{ stroke-dashoffset: 0; }
+  }
 
-#ampPath.solid{
-  fill:#ffffff;
-  stroke-dasharray:none;
-}
+  /* after drawing: keep it solid */
+  #ampPath.solid{
+    fill:#ffffff;
+    stroke-dasharray:none;
+    stroke-dashoffset:0;
+  }
 
-/* ---------- MOBILE ---------- */
-@media(max-width:600px){
-  .names{font-size:42px}
-  .marquee{height:calc(100vh - 190px)}
-  .mono-overlay{width:min(420px,78vw)}
-}
+  /* ---------- MOBILE ---------- */
+  @media(max-width:600px){
+    header{padding-top:36px}
+    .names{font-size:42px}
+    .marquee{height:calc(100vh - 190px)}
+    .mono-overlay{width:min(420px,78vw)}
+    nav{gap:18px}
+  }
 </style>
 </head>
 
@@ -159,21 +165,21 @@ nav a:hover{border-bottom-color:#2e2e2e}
   <nav>
     <a href="home.html">Home</a>
     <a href="schedule.html">Schedule</a>
-    <a href="#">RSVP</a>
-    <a href="#">FAQs</a>
+    <a href="https://YOUR-ZOLA-OR-WITHJOY-URL/rsvp">RSVP</a>
+    <a href="https://YOUR-ZOLA-OR-WITHJOY-URL/faqs">FAQs</a>
   </nav>
 </header>
 
 <section class="marquee">
 
   <!-- MONOGRAM -->
-  <div class="mono-overlay">
+  <div class="mono-overlay" aria-hidden="true">
+    <!-- Make sure ss-only.png exists in your repo -->
     <img class="mono-ss" src="ss-only.png" alt="">
 
-    <svg class="mono-amp" viewBox="0 0 2048 1931">
-      <path id="ampPath" d="
-m0 0h25l34 4 22 5 16 6 14 7 12 9 10 9 11 14 8 16 5 16 2 11v25l-3 20-5 19-7 18-11 21-7 10-8 12-9 11-11 13-12 13-17 17h-2l-1 3-8 7-8 8-11 9-15 13-17 13-14 11-13 10-20 14-15 10-17 12-25 16-31 19-4 2 1 5 12 21 11 18 16 24 8 13 12 19 16 24 13 19 15 22 32 48 11 17 10 16 11 17 5 9v5l-20 20-7 8-9 10-10 10-8 7-10 10-8 7-6 5-5-1-5-8-13-25-8-16-28-52-18-34-11-20-8-17-11-19-8-16-14-27-19-39-11-24-5-12v-3
-"></path>
+    <!-- Animated ampersand -->
+    <svg class="mono-amp" viewBox="0 0 2048 1931" aria-hidden="true">
+      <path id="ampPath" transform="translate(1128,34)" d="m0 0h25l34 4 22 5 16 6 14 7 12 9 10 9 11 14 8 16 5 16 2 11v25l-3 20-5 19-7 18-11 21-7 10-8 12-9 11-11 13-12 13-17 17h-2l-1 3-8 7-8 8-11 9-15 13-17 13-14 11-13 10-20 14-15 10-17 12-25 16-31 19-4 2 1 5 12 21 11 18 16 24 8 13 12 19 16 24 13 19 15 22 32 48 11 17 10 16 11 17 5 9v5l-20 20-7 8-9 10-10 10-8 7-10 10-8 7-6 5-5-1-5-8-13-25-8-16-28-52-18-34-11-20-8-17-11-19-8-16-14-27-19-39-11-24-5-12v-3l-21 12-28 17-15 9-22 13-26 16-15 10-26 17-16 11-18 13-21 16-11 8-13 11-11 9-11 10-8 7-16 15-5 6h-2l-2 4-8 8-8 10-11 13-8 11-20 28-12 20-11 22-7 17-8 27-3 14-2 20v19l2 20 7 23 9 19 8 11 11 12 2 4h2v2h2v2l4 2 11 9 15 9 20 9 21 6 23 4 11 1h40l23-3 30-6 23-6 34-12 26-11 22-11 21-12 16-10 17-11 16-11 15-11 16-12 16-13 10-9 11-9 15-13 16-15 10-9 13-12 57-57 7-8 11-12 8-8 7-8 13-13 7-8 9-10 7-8 3-4h2l2-4 11-12 9-11 7-7 7-8 14-17 12-13 8-10 18-20 8-10 10-11 9-11 11-13 10-12 9-11 8-9 9-11 8-9 8-10 10-11 11-14 8-9 11-14 9-9 1-2h2l2-4 11-13 9-10 14-15 9-11 15-16 62-62 8-7 14-12 11-10 11-9 15-12 17-13 16-12 13-9 34-22 25-14 29-14 28-10 24-7 23-4 35-4h14l21 2 25 5 19 7 16 8 10 9 8 7 12 12 10 14 8 17 4 14 1 6v22l-4 15-8 15-12 13-11 7-11 4h-16l-15-4-10-6-7-7-5-10-3-11 1-9 4-9 6-9 9-11 5-10 2-7v-10l-3-11-7-11-9-8-10-6-11-4-14-3-10-1h-27l-25 5-26 7-25 10-25 12-24 13-23 14-19 13-19 14-10 8-16 13-14 12-10 9-13 12-20 18-31 31-9 11-12 12-7 8-11 11-9 11-14 15-9 11-9 10-9 11-10 11-8 10-9 10-8 10-12 14-8 10-12 14-9 11-12 13-6 8-12 14-11 13-9 11-13 15-10 11-11 14-12 13-9 11-12 13-9 10-9 11-12 13-16 17-9 11-11 11-7 8-11 11-7 8-21 21-9 11-61 61-11 9-16 15-8 7-16 13-12 10-13 10-17 13-19 13-11 8-22 14-13 8-32 17-16 8-15 7-31 12-21 7-27 7-25 5-23 3-23 2h-24l-32-3-24-4-24-7-25-9-23-12-11-7-14-10-14-12-9-10-13-17-12-21-11-33-2-12-1-11v-27l2-21 8-29 7-20 14-29 6-11 12-19 11-15 10-13 7-8 12-13 7-8h2l2-4h2l2-4 13-12 17-16 10-9 14-11 18-14 11-8 18-13 19-13 34-23 19-12 22-13 20-12 24-14 16-9 19-11 23-12 21-12 15-8h2l-2-9-9-24-8-27-6-28-4-27-2-24v-29l2-23 4-24 5-22 7-24 10-23 14-26 16-24 14-18 23-23 11-9 15-12 25-15 20-9 28-9 19-4 21-3zm-6 27-23 3-19 5-20 8-17 9-15 10-16 13-12 12-9 11-8 11-13 21-9 20-10 26-5 22-3 22-1 14v28l2 20 4 24 7 27 12 34 12 27 4 1 10-7 22-13 39-26 18-13 9-7 13-10 14-11 11-10 11-9 10-9 22-22 9-11 11-13 13-19 9-15 10-19 11-33 4-24v-9l-3-23-5-15-6-12-9-11-10-9-14-8-21-7-20-3z"></path>
     </svg>
   </div>
 
@@ -195,27 +201,43 @@ m0 0h25l34 4 22 5 16 6 14 7 12 9 10 9 11 14 8 16 5 16 2 11v25l-3 20-5 19-7 18-11
 </section>
 
 <script>
-/* COUNTDOWN */
-const weddingDate=new Date("2027-02-27T15:00:00+08:00");
-const el=document.getElementById("countdown");
+  /* COUNTDOWN */
+  const weddingDate = new Date("2027-02-27T15:00:00+08:00");
+  const el = document.getElementById("countdown");
 
-function tick(){
-  const now=new Date();
-  const diff=weddingDate-now;
-  if(diff<=0){el.textContent="TODAY 🤍";return}
-  const s=Math.floor(diff/1000);
-  const d=Math.floor(s/86400);
-  const h=Math.floor((s%86400)/3600);
-  const m=Math.floor((s%3600)/60);
-  el.textContent=`${d} DAYS • ${h} HOURS • ${m} MINUTES`;
-}
-tick();
-setInterval(tick,1000);
+  function tick(){
+    const now = new Date();
+    const diff = weddingDate - now;
+    if(diff <= 0){ el.textContent = "TODAY 🤍"; return; }
 
-/* MAKE & SOLID AFTER DRAW */
-window.addEventListener("load",()=>{
-  setTimeout(()=>document.getElementById("ampPath").classList.add("solid"),1800);
-});
+    const totalSeconds = Math.floor(diff/1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const mins = Math.floor((totalSeconds % 3600) / 60);
+
+    el.textContent = `${days} DAYS • ${hours} HOURS • ${mins} MINUTES`;
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  /* AMPERSAND DRAW (robust) */
+  window.addEventListener("load", () => {
+    const amp = document.getElementById("ampPath");
+    if(!amp) return;
+
+    // calculate exact length so the dash animation always works
+    const len = amp.getTotalLength();
+    amp.style.strokeDasharray = len;
+    amp.style.strokeDashoffset = len;
+
+    // trigger drawing
+    amp.classList.add("drawing");
+
+    // after drawing finishes, make it solid
+    setTimeout(() => {
+      amp.classList.add("solid");
+    }, 1750); // matches 1.7s animation
+  });
 </script>
 
 </body>
