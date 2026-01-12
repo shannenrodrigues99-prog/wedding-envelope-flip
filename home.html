@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shannen & Samarth</title>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Alex Brush -->
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -15,126 +15,93 @@
       padding: 0;
     }
 
+    html, body {
+      height: 100vh;
+      overflow: hidden;
+      background: #faf8f5;
+      font-family: serif;
+    }
+
     body {
-      font-family: "Playfair Display", serif;
-      background: #fbfaf8;
-      color: #222;
-      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* ================= HEADER ================= */
-
+    /* ===== HEADER ===== */
     header {
-      background: #fbfaf8;
       text-align: center;
-      padding: 56px 16px 48px;
+      padding: 20px 16px 12px;
+      flex-shrink: 0;
     }
 
-    .names {
-      font-family: "Alex Brush", cursive;
-      font-size: clamp(44px, 6vw, 60px);
-      margin-bottom: 18px;
+    header h1 {
+      font-family: 'Alex Brush', cursive;
+      font-size: 48px;
+      font-weight: normal;
+      margin-bottom: 6px;
     }
 
-    .countdown {
+    #countdown {
       font-size: 14px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 32px;
+      letter-spacing: 1px;
+      color: #555;
+      margin-bottom: 12px;
     }
 
     nav {
       display: flex;
       justify-content: center;
-      gap: 32px;
+      gap: 28px;
       font-size: 15px;
     }
 
     nav a {
       text-decoration: none;
-      color: #222;
-      padding-bottom: 6px;
+      color: #111;
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
     }
 
     nav a.active {
-      border-bottom: 2px solid #222;
+      border-bottom: 2px solid #111;
     }
 
-    /* ================= MARQUEE ================= */
-
+    /* ===== MARQUEE ===== */
     .marquee {
-      width: 100vw;
-      height: 70vh;
-      margin-top: 40px; /* pushes photos LOWER */
-      overflow: hidden;
-      background: #e7e4df;
-    }
-
-    .marquee-track {
+      flex: 1;
       display: flex;
-      align-items: center;
-      gap: 0;
-      height: 100%;
-      width: max-content;
-      animation: scroll 50s linear infinite;
+      width: 100vw;
+      overflow: hidden;
     }
 
-    /* DIFFERENT PHOTO SHAPES */
-    .slide {
-      height: 100%;
-      flex-shrink: 0;
-    }
-
-    .wide {
-      width: 45vw;
-    }
-
-    .square {
-      width: 33vw;
-    }
-
-    .tall {
-      width: 28vw;
-    }
-
-    .slide img {
-      width: 100%;
+    .marquee img {
       height: 100%;
       object-fit: cover;
-      display: block;
     }
 
-    @keyframes scroll {
-      from {
-        transform: translateX(0);
-      }
-      to {
-        transform: translateX(-50%);
-      }
-    }
-
-    /* ================= MOBILE ================= */
+    /* Different image widths (Zola feel) */
+    .img-wide { width: 40vw; }
+    .img-medium { width: 30vw; }
+    .img-narrow { width: 20vw; }
 
     @media (max-width: 768px) {
-      .marquee {
-        height: 60vh;
+      header h1 {
+        font-size: 36px;
       }
 
-      .wide,
-      .square,
-      .tall {
-        width: 100vw;
-      }
+      .img-wide { width: 60vw; }
+      .img-medium { width: 50vw; }
+      .img-narrow { width: 40vw; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ===== HEADER ===== -->
+  <!-- HEADER -->
   <header>
-    <div class="names">Shannen &amp; Samarth</div>
-    <div class="countdown" id="countdown"></div>
+    <h1>Shannen &amp; Samarth</h1>
+    <div id="countdown">Loading…</div>
 
     <nav>
       <a href="home.html" class="active">Home</a>
@@ -144,27 +111,20 @@
     </nav>
   </header>
 
-  <!-- ===== MARQUEE ===== -->
+  <!-- MARQUEE -->
   <section class="marquee">
-    <div class="marquee-track">
-      <!-- FIRST SET -->
-      <div class="slide wide"><img src="photo1.jpg" alt=""></div>
-      <div class="slide square"><img src="photo2.jpg" alt=""></div>
-      <div class="slide tall"><img src="photo3.jpg" alt=""></div>
-
-      <!-- DUPLICATE SET (REQUIRED FOR LOOP) -->
-      <div class="slide wide"><img src="photo1.jpg" alt=""></div>
-      <div class="slide square"><img src="photo2.jpg" alt=""></div>
-      <div class="slide tall"><img src="photo3.jpg" alt=""></div>
-    </div>
+    <img src="photo1.jpg" class="img-wide" alt="">
+    <img src="photo2.jpg" class="img-medium" alt="">
+    <img src="photo3.jpg" class="img-narrow" alt="">
+    <img src="photo4.jpg" class="img-medium" alt="">
   </section>
 
-  <!-- ===== COUNTDOWN SCRIPT ===== -->
+  <!-- COUNTDOWN SCRIPT -->
   <script>
     const weddingDate = new Date("February 27, 2027 00:00:00").getTime();
     const countdownEl = document.getElementById("countdown");
 
-    setInterval(() => {
+    function updateCountdown() {
       const now = new Date().getTime();
       const diff = weddingDate - now;
 
@@ -173,7 +133,10 @@
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
 
       countdownEl.innerHTML = `${days} days • ${hours} hours • ${minutes} minutes`;
-    }, 1000);
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
   </script>
 
 </body>
