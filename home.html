@@ -123,9 +123,9 @@
 
     .amp-svg {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      inset: 10%;
+      width: 80%;
+      height: 80%;
     }
 
     #ampPath {
@@ -186,7 +186,10 @@
           <img src="ss-solid.png" class="ss-img" alt="" />
 
           <!-- DRAWN AMPERSAND -->
-          <svg class="amp-svg" viewBox="0 0 600 600">
+          <svg class="amp-svg"
+     viewBox="0 0 600 600"
+     preserveAspectRatio="xMidYMid meet">
+
             <path id="ampPath"
               d="M360 120
                  C305 95 235 120 235 190
