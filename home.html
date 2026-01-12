@@ -1,82 +1,78 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Shannen & Samarth — Home</title>
 
   <style>
     * { box-sizing: border-box; }
-    body{
-      margin:0;
-      background:#f6f2ee;
-      color:#111;
+
+    body {
+      margin: 0;
       font-family: Georgia, serif;
+      background: #f6f2ee;
     }
 
-    /* Header */
-    .header{
-      text-align:center;
-      padding: 26px 16px 16px;
-    }
-    .brand{
-      letter-spacing:0.22em;
-      font-size:28px;
-    }
-    .nav{
-      margin-top:14px;
-      display:flex;
-      gap:26px;
-      justify-content:center;
-      flex-wrap:wrap;
-      font-size:18px;
-    }
-    .nav a{
-      text-decoration:none;
-      color:#111;
-      padding-bottom:6px;
-      border-bottom:2px solid transparent;
-    }
-    .nav a.active{
-      border-bottom-color:#111;
+    /* Top header */
+    .header {
+      background: #f6f2ee;
+      text-align: center;
+      padding: 26px 16px 14px;
     }
 
-    /* Main area */
-    .container{
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 18px 60px;
+    .brand {
+      font-size: 28px;
+      letter-spacing: 0.22em;
     }
 
-    /* Hero photo block (placeholder for now) */
-    .hero{
-      margin-top: 10px;
-      border-radius: 18px;
-      overflow:hidden;
-      background:#ddd;
-      min-height: 520px;
-      display:grid;
-      place-items:center;
-      position:relative;
+    .nav {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+      gap: 26px;
+      flex-wrap: wrap;
+      font-size: 18px;
     }
 
-    .hero-note{
-      font-size:18px;
-      background: rgba(255,255,255,0.75);
-      padding: 12px 16px;
-      border-radius: 14px;
+    .nav a {
+      text-decoration: none;
+      color: #111;
+      padding-bottom: 6px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav a.active {
+      border-bottom-color: #111;
+    }
+
+    /* Photo area fills the rest of screen */
+    .photos {
+      height: calc(100vh - 140px); /* subtract header height */
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .photo {
+      background-size: cover;
+      background-position: center;
     }
 
     /* Mobile */
-    @media (max-width: 820px){
-      .brand{ font-size:22px; }
-      .nav{ font-size:16px; gap:18px; }
-      .hero{ min-height: 420px; }
+    @media (max-width: 820px) {
+      .brand { font-size: 22px; }
+      .nav { font-size: 16px; gap: 18px; }
+
+      .photos {
+        grid-template-columns: 1fr;
+        height: calc(100vh - 130px);
+      }
     }
   </style>
 </head>
 
 <body>
+
   <header class="header">
     <div class="brand">SHANNEN &amp; SAMARTH</div>
 
@@ -89,12 +85,11 @@
     </nav>
   </header>
 
-  <main class="container">
-    <section class="hero">
-      <div class="hero-note">
-        Photo section goes here (next step: Zola-style looping marquee)
-      </div>
-    </section>
-  </main>
+  <!-- FULL SCREEN PHOTOS -->
+  <section class="photos">
+    <div class="photo" style="background-image:url('photo1.jpg');"></div>
+    <div class="photo" style="background-image:url('photo2.jpg');"></div>
+  </section>
+
 </body>
 </html>
