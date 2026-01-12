@@ -5,13 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wedding Envelope</title>
 
+  <!-- Alex Brush font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
       background: #ffffff;
     }
 
-    /* Page layout like your inspo */
+    /* Page layout */
     .page{
       min-height: 100vh;
       display: flex;
@@ -22,25 +27,24 @@
       box-sizing: border-box;
     }
 
-    /* Top name */
+    /* Top names */
     .top-title{
-      font-size: clamp(28px, 4vw, 44px);
-      line-height: 1.2;
-      font-family: "Georgia", serif; /* swap later if you want */
-      font-style: italic;
+      font-family: "Alex Brush", cursive;
+      font-size: clamp(36px, 5vw, 56px);
       color: #111;
       text-align: center;
     }
 
     /* Bottom instruction */
     .bottom-instruction{
-      font-size: 18px;
-      font-family: "Georgia", serif;
+      font-family: "Alex Brush", cursive;
+      font-size: 22px;
       color: #111;
       text-align: center;
+      opacity: 0.85;
     }
 
-    /* Envelope container (this is the ONLY thing that flips) */
+    /* Envelope container (ONLY thing that flips) */
     .envelope{
       width: min(720px, 88vw);
       perspective: 1400px;
@@ -50,9 +54,9 @@
     .inner{
       position: relative;
       width: 100%;
-      aspect-ratio: 3 / 2; /* adjust if needed */
+      aspect-ratio: 3 / 2;
       transform-style: preserve-3d;
-      transition: transform 1.5s ease-in-out; /* flip speed */
+      transition: transform 1.5s ease-in-out;
     }
 
     .envelope.flipped .inner{
@@ -108,7 +112,6 @@
 
       env.classList.add("flipped");
 
-      // Change this link to your real wedding link later
       setTimeout(() => {
         window.location.assign("https://www.google.com/");
       }, 1300);
