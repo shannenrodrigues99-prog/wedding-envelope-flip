@@ -5,43 +5,62 @@
   <title>Shannen & Samarth</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Alex Brush font -->
+  <!-- Alex Brush -->
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
 
   <style>
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      margin: 0;
-      background: #ffffff;
+    :root{
+      --bg: #ffffff;
+      --text: #2e2e2e;
+      --muted: rgba(0,0,0,.65);
+
+      --headerTop: 56px;     /* space above names */
+      --headerBottom: 18px;  /* space below tabs */
+      --marqueeTopGap: 22px; /* gap between header and photos */
+      --pageBottomGap: 14px; /* tiny gap at bottom */
+      --speed: 55s;          /* higher = slower */
+    }
+
+    html, body{
+      height: 100vh;
+      overflow: hidden; /* ✅ one screen, no scroll */
+      background: var(--bg);
+      color: var(--text);
       font-family: Georgia, serif;
-      color: #2e2e2e;
-      overflow-x: hidden;
+    }
+
+    body{
+      display: flex;
+      flex-direction: column; /* header on top, marquee fills rest */
     }
 
     /* ===== HEADER ===== */
-    header {
+    header{
       text-align: center;
-      padding: 64px 16px 48px;
+      padding: var(--headerTop) 16px var(--headerBottom);
+      flex: 0 0 auto;
+      background: var(--bg);
     }
 
-    .names {
-      font-family: 'Alex Brush', cursive;
-      font-size: 56px;
+    .names{
+      font-family: "Alex Brush", cursive;
+      font-size: clamp(44px, 6vw, 60px);
       line-height: 1;
     }
 
-    .countdown {
+    .countdown{
       margin-top: 12px;
-      font-size: 14px;
-      letter-spacing: 0.14em;
-      opacity: 0.75;
-      min-height: 18px;
+      font-size: 13px;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
+      color: var(--muted);
+      min-height: 18px;
     }
 
-    nav {
-      margin-top: 28px;
+    nav{
+      margin-top: 22px;
       display: flex;
       justify-content: center;
       gap: 28px;
@@ -51,67 +70,87 @@
       text-transform: uppercase;
     }
 
-    nav a {
-      color: #2e2e2e;
+    nav a{
+      color: var(--text);
       text-decoration: none;
       padding-bottom: 6px;
       border-bottom: 2px solid transparent;
     }
 
     nav a:hover,
-    nav a.active {
-      border-bottom-color: #2e2e2e;
+    nav a.active{
+      border-bottom-color: var(--text);
     }
 
-    /* ===== MARQUEE ===== */
-    .marquee-section {
+    /* ===== MARQUEE LAYOUT (fills remaining screen height) ===== */
+    .marquee-area{
+      flex: 1 1 auto;                       /* ✅ fills remaining height */
+      padding-top: var(--marqueeTopGap);    /* space under header */
+      padding-bottom: var(--pageBottomGap); /* tiny bottom gap */
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .marquee{
+      height: 100%;
       width: 100%;
       overflow: hidden;
-      margin: 56px 0 72px;
+      position: relative;
     }
 
-    .marquee-track {
+    /* Looping track */
+    .track{
       display: flex;
+      height: 100%;
       width: max-content;
-      animation: marquee 45s linear infinite;
       will-change: transform;
-      align-items: flex-start; /* keeps the “start/top” aligned */
+      animation: marquee var(--speed) linear infinite;
+      align-items: stretch;
     }
 
-    /* Bigger/taller strip (covers more of screen) */
-    .marquee-track img {
-      height: 520px;     /* 👈 extend DOWN more */
-      width: auto;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* Different “shapes” = different widths */
-    .marquee-track img.wide   { width: 680px; }
-    .marquee-track img.med    { width: 520px; }
-    .marquee-track img.narrow { width: 380px; }
-
-    @keyframes marquee {
+    @keyframes marquee{
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
     }
 
-    /* ===== MOBILE ===== */
-    @media (max-width: 600px) {
-      header { padding: 48px 16px 36px; }
-      .names { font-size: 44px; }
-      nav { gap: 18px; }
+    /* Panels = different widths for variety */
+    .panel{
+      height: 100%;
+      flex: 0 0 auto;
+      overflow: hidden;
+    }
 
-      .marquee-section { margin: 40px 0 56px; }
+    /* More variety */
+    .xxwide { width: 78vw; max-width: 980px; min-width: 420px; }
+    .xwide  { width: 60vw; max-width: 780px; min-width: 360px; }
+    .wide   { width: 46vw; max-width: 640px; min-width: 300px; }
+    .med    { width: 34vw; max-width: 520px; min-width: 260px; }
+    .narrow { width: 24vw; max-width: 380px; min-width: 220px; }
 
-      .marquee-track img {
-        height: 340px; /* taller on phone too */
+    .panel img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* ✅ fills panel without distortion */
+      display: block;
+    }
+
+    /* Mobile */
+    @media (max-width: 700px){
+      :root{
+        --headerTop: 44px;
+        --marqueeTopGap: 16px;
+        --pageBottomGap: 10px;
+        --speed: 70s;
       }
 
-      /* mobile widths */
-      .marquee-track img.wide   { width: 92vw; }
-      .marquee-track img.med    { width: 78vw; }
-      .marquee-track img.narrow { width: 64vw; }
+      nav{ gap: 18px; }
+
+      /* On mobile, keep it editorial but not tiny */
+      .xxwide { width: 92vw; min-width: 0; }
+      .xwide  { width: 86vw; min-width: 0; }
+      .wide   { width: 78vw; min-width: 0; }
+      .med    { width: 70vw; min-width: 0; }
+      .narrow { width: 62vw; min-width: 0; }
     }
   </style>
 </head>
@@ -130,40 +169,46 @@
     </nav>
   </header>
 
-  <!-- MARQUEE -->
-  <section class="marquee-section">
-    <div class="marquee-track" aria-label="Photo marquee">
+  <!-- Marquee fills the rest of the screen down to bottom -->
+  <section class="marquee-area">
+    <div class="marquee">
+      <div class="track">
 
-      <!-- FIRST SET (assign wide/med/narrow to vary shapes) -->
-      <img class="wide"   src="photo1.jpg" alt="">
-      <img class="narrow" src="photo2.jpg" alt="">
-      <img class="med"    src="photo3.jpg" alt="">
-      <img class="wide"   src="photo4.jpg" alt="">
+        <!-- FIRST SET (variety) -->
+        <div class="panel wide"><img src="photo1.jpg" alt=""></div>
+        <div class="panel narrow"><img src="photo2.jpg" alt=""></div>
+        <div class="panel xwide"><img src="photo3.jpg" alt=""></div>
+        <div class="panel med"><img src="photo4.jpg" alt=""></div>
+        <div class="panel xxwide"><img src="photo5.jpg" alt=""></div>
+        <div class="panel narrow"><img src="photo6.jpg" alt=""></div>
 
-      <!-- DUPLICATE SET (same classes/order for seamless loop) -->
-      <img class="wide"   src="photo1.jpg" alt="">
-      <img class="narrow" src="photo2.jpg" alt="">
-      <img class="med"    src="photo3.jpg" alt="">
-      <img class="wide"   src="photo4.jpg" alt="">
+        <!-- DUPLICATE SET (must match order + classes) -->
+        <div class="panel wide"><img src="photo1.jpg" alt=""></div>
+        <div class="panel narrow"><img src="photo2.jpg" alt=""></div>
+        <div class="panel xwide"><img src="photo3.jpg" alt=""></div>
+        <div class="panel med"><img src="photo4.jpg" alt=""></div>
+        <div class="panel xxwide"><img src="photo5.jpg" alt=""></div>
+        <div class="panel narrow"><img src="photo6.jpg" alt=""></div>
 
+      </div>
     </div>
   </section>
 
-  <!-- COUNTDOWN SCRIPT -->
+  <!-- Countdown -->
   <script>
     const weddingDate = new Date("2027-02-27T15:00:00+08:00");
     const el = document.getElementById("countdown");
 
     function pad(n){ return String(n).padStart(2, "0"); }
 
-    function tick() {
+    function tick(){
       const diff = weddingDate - new Date();
       if (diff <= 0) { el.textContent = "TODAY 🤍"; return; }
 
-      const totalSeconds = Math.floor(diff / 1000);
-      const days = Math.floor(totalSeconds / 86400);
-      const hours = Math.floor((totalSeconds % 86400) / 3600);
-      const mins = Math.floor((totalSeconds % 3600) / 60);
+      const s = Math.floor(diff / 1000);
+      const days = Math.floor(s / 86400);
+      const hours = Math.floor((s % 86400) / 3600);
+      const mins = Math.floor((s % 3600) / 60);
 
       el.textContent = `${days} DAYS • ${pad(hours)} HOURS • ${pad(mins)} MINUTES`;
     }
