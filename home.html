@@ -5,7 +5,7 @@
   <title>Shannen & Samarth</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Google Font (Alex Brush) -->
+  <!-- Alex Brush font -->
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
 
   <style>
@@ -13,14 +13,16 @@
 
     body {
       margin: 0;
-      background: #ffffff; /* whiter background */
+      background: #ffffff;
       font-family: Georgia, serif;
       color: #2e2e2e;
+      overflow-x: hidden;
     }
 
+    /* ===== HEADER ===== */
     header {
       text-align: center;
-      padding: 56px 16px 40px; /* breathing room */
+      padding: 64px 16px 48px;
     }
 
     .names {
@@ -34,7 +36,7 @@
       font-size: 14px;
       letter-spacing: 0.14em;
       opacity: 0.75;
-      min-height: 18px; /* prevents “jump” while loading */
+      min-height: 18px; /* prevents jump */
     }
 
     nav {
@@ -43,45 +45,42 @@
       justify-content: center;
       gap: 28px;
       flex-wrap: wrap;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
 
     nav a {
-      text-decoration: none;
-      font-size: 14px;
-      letter-spacing: 0.12em;
       color: #2e2e2e;
+      text-decoration: none;
       padding-bottom: 6px;
       border-bottom: 2px solid transparent;
     }
 
-    nav a:hover {
-      border-bottom-color: #2e2e2e;
-    }
-
+    nav a:hover,
     nav a.active {
       border-bottom-color: #2e2e2e;
     }
 
-    /* ===== Marquee ===== */
+    /* ===== MARQUEE ===== */
     .marquee-section {
       width: 100%;
       overflow: hidden;
-      margin: 56px 0 72px; /* space above and below marquee */
+      margin: 56px 0 72px; /* space above and below photos */
     }
 
     .marquee-track {
       display: flex;
-      width: fit-content;
+      width: max-content;
       animation: marquee 40s linear infinite;
       will-change: transform;
     }
 
     .marquee-track img {
-      height: 360px;      /* stops stretching */
-      width: auto;        /* keep proportions */
+      height: 360px;     /* keeps photos consistent */
+      width: auto;       /* prevents stretching */
       object-fit: cover;
-      margin-right: 24px; /* gap between photos */
-      display: block;
+      display: block;    /* NO gaps */
     }
 
     @keyframes marquee {
@@ -89,15 +88,22 @@
       to   { transform: translateX(-50%); }
     }
 
-    /* Mobile tweaks */
+    /* ===== MOBILE ===== */
     @media (max-width: 600px) {
-      header { padding: 44px 16px 32px; }
-      .names { font-size: 44px; }
-      nav { gap: 18px; }
+      header {
+        padding: 48px 16px 36px;
+      }
+
+      .names {
+        font-size: 44px;
+      }
+
+      nav {
+        gap: 18px;
+      }
 
       .marquee-track img {
-        height: 250px;
-        margin-right: 16px;
+        height: 240px;
       }
 
       .marquee-section {
@@ -109,6 +115,7 @@
 
 <body>
 
+  <!-- HEADER -->
   <header>
     <div class="names">Shannen &amp; Samarth</div>
     <div id="countdown" class="countdown"></div>
@@ -121,26 +128,27 @@
     </nav>
   </header>
 
-  <!-- Marquee (replace photo1.jpg etc with your actual filenames) -->
+  <!-- MARQUEE -->
   <section class="marquee-section">
     <div class="marquee-track" aria-label="Photo marquee">
-      <!-- First set -->
-      <img src="photo1.jpg" alt="Photo 1">
-      <img src="photo2.jpg" alt="Photo 2">
-      <img src="photo3.jpg" alt="Photo 3">
-      <img src="photo4.jpg" alt="Photo 4">
 
-      <!-- Duplicate set (for seamless loop) -->
-      <img src="photo1.jpg" alt="Photo 1 duplicate">
-      <img src="photo2.jpg" alt="Photo 2 duplicate">
-      <img src="photo3.jpg" alt="Photo 3 duplicate">
-      <img src="photo4.jpg" alt="Photo 4 duplicate">
+      <!-- FIRST SET -->
+      <img src="photo1.jpg" alt="">
+      <img src="photo2.jpg" alt="">
+      <img src="photo3.jpg" alt="">
+      <img src="photo4.jpg" alt="">
+
+      <!-- DUPLICATE SET (for seamless loop) -->
+      <img src="photo1.jpg" alt="">
+      <img src="photo2.jpg" alt="">
+      <img src="photo3.jpg" alt="">
+      <img src="photo4.jpg" alt="">
+
     </div>
   </section>
 
-  <!-- Countdown Script -->
+  <!-- COUNTDOWN SCRIPT -->
   <script>
-    // Wedding date: 27 February 2027 (Perth time)
     const weddingDate = new Date("2027-02-27T15:00:00+08:00");
     const el = document.getElementById("countdown");
 
@@ -156,14 +164,13 @@
       }
 
       const totalSeconds = Math.floor(diff / 1000);
-      const days = Math.floor(totalSeconds / (60 * 60 * 24));
-      const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
-      const mins = Math.floor((totalSeconds % (60 * 60)) / 60);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const mins = Math.floor((totalSeconds % 3600) / 60);
 
       el.textContent = `${days} DAYS • ${pad(hours)} HOURS • ${pad(mins)} MINUTES`;
     }
 
-    // Set immediately so it doesn’t “appear late”
     tick();
     setInterval(tick, 1000);
   </script>
