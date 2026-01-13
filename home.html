@@ -36,7 +36,8 @@
       font-size: 14px;
       letter-spacing: 0.14em;
       opacity: 0.75;
-      min-height: 18px; /* prevents jump */
+      min-height: 18px;
+      text-transform: uppercase;
     }
 
     nav {
@@ -66,22 +67,29 @@
     .marquee-section {
       width: 100%;
       overflow: hidden;
-      margin: 56px 0 72px; /* space above and below photos */
+      margin: 56px 0 72px;
     }
 
     .marquee-track {
       display: flex;
       width: max-content;
-      animation: marquee 40s linear infinite;
+      animation: marquee 45s linear infinite;
       will-change: transform;
+      align-items: flex-start; /* keeps the “start/top” aligned */
     }
 
+    /* Bigger/taller strip (covers more of screen) */
     .marquee-track img {
-      height: 360px;     /* keeps photos consistent */
-      width: auto;       /* prevents stretching */
+      height: 520px;     /* 👈 extend DOWN more */
+      width: auto;
       object-fit: cover;
-      display: block;    /* NO gaps */
+      display: block;
     }
+
+    /* Different “shapes” = different widths */
+    .marquee-track img.wide   { width: 680px; }
+    .marquee-track img.med    { width: 520px; }
+    .marquee-track img.narrow { width: 380px; }
 
     @keyframes marquee {
       from { transform: translateX(0); }
@@ -90,32 +98,26 @@
 
     /* ===== MOBILE ===== */
     @media (max-width: 600px) {
-      header {
-        padding: 48px 16px 36px;
-      }
+      header { padding: 48px 16px 36px; }
+      .names { font-size: 44px; }
+      nav { gap: 18px; }
 
-      .names {
-        font-size: 44px;
-      }
-
-      nav {
-        gap: 18px;
-      }
+      .marquee-section { margin: 40px 0 56px; }
 
       .marquee-track img {
-        height: 240px;
+        height: 340px; /* taller on phone too */
       }
 
-      .marquee-section {
-        margin: 40px 0 56px;
-      }
+      /* mobile widths */
+      .marquee-track img.wide   { width: 92vw; }
+      .marquee-track img.med    { width: 78vw; }
+      .marquee-track img.narrow { width: 64vw; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
   <header>
     <div class="names">Shannen &amp; Samarth</div>
     <div id="countdown" class="countdown"></div>
@@ -132,17 +134,17 @@
   <section class="marquee-section">
     <div class="marquee-track" aria-label="Photo marquee">
 
-      <!-- FIRST SET -->
-      <img src="photo1.jpg" alt="">
-      <img src="photo2.jpg" alt="">
-      <img src="photo3.jpg" alt="">
-      <img src="photo4.jpg" alt="">
+      <!-- FIRST SET (assign wide/med/narrow to vary shapes) -->
+      <img class="wide"   src="photo1.jpg" alt="">
+      <img class="narrow" src="photo2.jpg" alt="">
+      <img class="med"    src="photo3.jpg" alt="">
+      <img class="wide"   src="photo4.jpg" alt="">
 
-      <!-- DUPLICATE SET (for seamless loop) -->
-      <img src="photo1.jpg" alt="">
-      <img src="photo2.jpg" alt="">
-      <img src="photo3.jpg" alt="">
-      <img src="photo4.jpg" alt="">
+      <!-- DUPLICATE SET (same classes/order for seamless loop) -->
+      <img class="wide"   src="photo1.jpg" alt="">
+      <img class="narrow" src="photo2.jpg" alt="">
+      <img class="med"    src="photo3.jpg" alt="">
+      <img class="wide"   src="photo4.jpg" alt="">
 
     </div>
   </section>
@@ -155,13 +157,8 @@
     function pad(n){ return String(n).padStart(2, "0"); }
 
     function tick() {
-      const now = new Date();
-      const diff = weddingDate - now;
-
-      if (diff <= 0) {
-        el.textContent = "TODAY 🤍";
-        return;
-      }
+      const diff = weddingDate - new Date();
+      if (diff <= 0) { el.textContent = "TODAY 🤍"; return; }
 
       const totalSeconds = Math.floor(diff / 1000);
       const days = Math.floor(totalSeconds / 86400);
