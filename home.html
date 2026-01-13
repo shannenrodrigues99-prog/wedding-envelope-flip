@@ -16,16 +16,16 @@
       --text: #2e2e2e;
       --muted: rgba(0,0,0,.65);
 
-      --headerTop: 56px;     /* space above names */
-      --headerBottom: 18px;  /* space below tabs */
-      --marqueeTopGap: 22px; /* gap between header and photos */
-      --pageBottomGap: 14px; /* tiny gap at bottom */
-      --speed: 55s;          /* higher = slower */
+      --headerTop: 56px;
+      --headerBottom: 18px;
+      --marqueeTopGap: 22px;
+      --pageBottomGap: 14px;
+      --speed: 55s;
     }
 
     html, body{
       height: 100vh;
-      overflow: hidden; /* ✅ one screen, no scroll */
+      overflow: hidden;
       background: var(--bg);
       color: var(--text);
       font-family: Georgia, serif;
@@ -33,7 +33,7 @@
 
     body{
       display: flex;
-      flex-direction: column; /* header on top, marquee fills rest */
+      flex-direction: column;
     }
 
     /* ===== HEADER ===== */
@@ -82,11 +82,11 @@
       border-bottom-color: var(--text);
     }
 
-    /* ===== MARQUEE LAYOUT (fills remaining screen height) ===== */
+    /* ===== MARQUEE AREA ===== */
     .marquee-area{
-      flex: 1 1 auto;                       /* ✅ fills remaining height */
-      padding-top: var(--marqueeTopGap);    /* space under header */
-      padding-bottom: var(--pageBottomGap); /* tiny bottom gap */
+      flex: 1 1 auto;
+      padding-top: var(--marqueeTopGap);
+      padding-bottom: var(--pageBottomGap);
       overflow: hidden;
       background: var(--bg);
     }
@@ -95,10 +95,26 @@
       height: 100%;
       width: 100%;
       overflow: hidden;
-      position: relative;
+      position: relative; /* IMPORTANT for overlay positioning */
     }
 
-    /* Looping track */
+    /* ===== SS OVERLAY (fixed on top) ===== */
+    .ss-overlay{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .ss-overlay img{
+      width: 180px;
+      height: auto;
+      display: block;
+    }
+
+    /* ===== LOOPING TRACK ===== */
     .track{
       display: flex;
       height: 100%;
@@ -113,14 +129,13 @@
       to   { transform: translateX(-50%); }
     }
 
-    /* Panels = different widths for variety */
+    /* ===== PANELS (variety) ===== */
     .panel{
       height: 100%;
       flex: 0 0 auto;
       overflow: hidden;
     }
 
-    /* More variety */
     .xxwide { width: 78vw; max-width: 980px; min-width: 420px; }
     .xwide  { width: 60vw; max-width: 780px; min-width: 360px; }
     .wide   { width: 46vw; max-width: 640px; min-width: 300px; }
@@ -130,11 +145,11 @@
     .panel img{
       width: 100%;
       height: 100%;
-      object-fit: cover; /* ✅ fills panel without distortion */
+      object-fit: cover;
       display: block;
     }
 
-    /* Mobile */
+    /* ===== MOBILE ===== */
     @media (max-width: 700px){
       :root{
         --headerTop: 44px;
@@ -145,12 +160,15 @@
 
       nav{ gap: 18px; }
 
-      /* On mobile, keep it editorial but not tiny */
       .xxwide { width: 92vw; min-width: 0; }
       .xwide  { width: 86vw; min-width: 0; }
       .wide   { width: 78vw; min-width: 0; }
       .med    { width: 70vw; min-width: 0; }
       .narrow { width: 62vw; min-width: 0; }
+
+      .ss-overlay img{
+        width: 140px;
+      }
     }
   </style>
 </head>
@@ -169,12 +187,18 @@
     </nav>
   </header>
 
-  <!-- Marquee fills the rest of the screen down to bottom -->
   <section class="marquee-area">
     <div class="marquee">
+
+      <!-- SS OVERLAY (stays still on top of moving photos) -->
+      <div class="ss-overlay">
+        <img src="ss-only.png" alt="S & S monogram">
+      </div>
+
+      <!-- MOVING PHOTOS -->
       <div class="track">
 
-        <!-- FIRST SET (variety) -->
+        <!-- FIRST SET -->
         <div class="panel wide"><img src="photo1.jpg" alt=""></div>
         <div class="panel narrow"><img src="photo2.jpg" alt=""></div>
         <div class="panel xwide"><img src="photo3.jpg" alt=""></div>
@@ -194,7 +218,7 @@
     </div>
   </section>
 
-  <!-- Countdown -->
+  <!-- COUNTDOWN -->
   <script>
     const weddingDate = new Date("2027-02-27T15:00:00+08:00");
     const el = document.getElementById("countdown");
