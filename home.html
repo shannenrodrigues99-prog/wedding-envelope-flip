@@ -24,16 +24,17 @@
     }
 
     html, body{
-      height: 100vh;
-      overflow: hidden; /* 🔒 no scrolling */
+      height: 100%;
       background: var(--bg);
       color: var(--text);
       font-family: Georgia, serif;
+      overflow: hidden; /* 🔒 no scrolling */
     }
 
     body{
       display: flex;
       flex-direction: column;
+      height: 100svh; /* ✅ better on iPhone than 100vh */
     }
 
     /* ===== HEADER ===== */
@@ -84,9 +85,10 @@
 
     /* ===== MARQUEE AREA ===== */
     .marquee-area{
-      flex: 1;                 /* 🔑 fills remaining height */
+      flex: 1;                 /* fills remaining height */
       padding-top: var(--marqueeTopGap);
       overflow: hidden;
+      min-height: 0;           /* ✅ flex fix */
     }
 
     .marquee{
@@ -95,20 +97,33 @@
       overflow: hidden;
     }
 
-    /* ===== SS OVERLAY ===== */
+    /* ===== SS OVERLAY (CENTER) ===== */
     .ss-overlay{
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      inset: 0;                /* ✅ easier perfect centering */
+      display: grid;
+      place-items: center;
       z-index: 5;
       pointer-events: none;
+    }
+
+    /* Optional: subtle “readability” halo behind monogram */
+    .ss-overlay::before{
+      content:"";
+      width: 320px;
+      height: 220px;
+      background: radial-gradient(closest-side, rgba(255,255,255,.55), rgba(255,255,255,0));
+      filter: blur(2px);
+      position: absolute;
+      z-index: 0;
     }
 
     .ss-overlay img{
       width: 180px;
       height: auto;
       display: block;
+      position: relative;
+      z-index: 1;
     }
 
     /* ===== MOVING TRACK ===== */
@@ -151,6 +166,11 @@
       .ss-overlay img{
         width: 140px;
       }
+
+      .ss-overlay::before{
+        width: 260px;
+        height: 190px;
+      }
     }
   </style>
 </head>
@@ -172,27 +192,27 @@
 <section class="marquee-area">
   <div class="marquee">
 
-    <!-- SS MONOGRAM -->
+    <!-- SS MONOGRAM (CENTER OVERLAY) -->
     <div class="ss-overlay">
-      <img src="SS-only.png" alt="S & S monogram">
+      <img src="SS-only.png" alt="S &amp; S monogram">
     </div>
 
     <!-- MOVING PHOTOS -->
     <div class="track">
-      <div class="panel"><img src="photo1.jpg"></div>
-      <div class="panel"><img src="photo2.jpg"></div>
-      <div class="panel"><img src="photo3.jpg"></div>
-      <div class="panel"><img src="photo4.jpg"></div>
-      <div class="panel"><img src="photo5.jpg"></div>
-      <div class="panel"><img src="photo6.jpg"></div>
+      <div class="panel"><img src="photo1.jpg" alt=""></div>
+      <div class="panel"><img src="photo2.jpg" alt=""></div>
+      <div class="panel"><img src="photo3.jpg" alt=""></div>
+      <div class="panel"><img src="photo4.jpg" alt=""></div>
+      <div class="panel"><img src="photo5.jpg" alt=""></div>
+      <div class="panel"><img src="photo6.jpg" alt=""></div>
 
       <!-- DUPLICATE FOR LOOP -->
-      <div class="panel"><img src="photo1.jpg"></div>
-      <div class="panel"><img src="photo2.jpg"></div>
-      <div class="panel"><img src="photo3.jpg"></div>
-      <div class="panel"><img src="photo4.jpg"></div>
-      <div class="panel"><img src="photo5.jpg"></div>
-      <div class="panel"><img src="photo6.jpg"></div>
+      <div class="panel"><img src="photo1.jpg" alt=""></div>
+      <div class="panel"><img src="photo2.jpg" alt=""></div>
+      <div class="panel"><img src="photo3.jpg" alt=""></div>
+      <div class="panel"><img src="photo4.jpg" alt=""></div>
+      <div class="panel"><img src="photo5.jpg" alt=""></div>
+      <div class="panel"><img src="photo6.jpg" alt=""></div>
     </div>
   </div>
 </section>
