@@ -20,13 +20,12 @@
       --headerBottom: 6px;
 
       --marqueeTopGap: 20px;
-      --pageBottomGap: 12px;
       --speed: 55s;
     }
 
     html, body{
       height: 100vh;
-      overflow: hidden;
+      overflow: hidden; /* 🔒 no scrolling */
       background: var(--bg);
       color: var(--text);
       font-family: Georgia, serif;
@@ -42,6 +41,7 @@
       text-align: center;
       padding: var(--headerTop) 16px var(--headerBottom);
       background: var(--bg);
+      flex: 0 0 auto;
     }
 
     .names{
@@ -84,9 +84,8 @@
 
     /* ===== MARQUEE AREA ===== */
     .marquee-area{
-      flex: 1;
+      flex: 1;                 /* 🔑 fills remaining height */
       padding-top: var(--marqueeTopGap);
-      padding-bottom: var(--pageBottomGap);
       overflow: hidden;
     }
 
@@ -128,7 +127,7 @@
     /* ===== PHOTO PANELS (5×7) ===== */
     .panel{
       height: 100%;
-      aspect-ratio: 5 / 7;     /* ✅ KEY CHANGE */
+      aspect-ratio: 5 / 7;
       flex: 0 0 auto;
       overflow: hidden;
     }
@@ -146,7 +145,6 @@
         --headerTop: 24px;
         --headerBottom: 4px;
         --marqueeTopGap: 14px;
-        --pageBottomGap: 8px;
         --speed: 70s;
       }
 
