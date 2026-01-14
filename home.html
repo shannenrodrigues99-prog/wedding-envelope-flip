@@ -189,7 +189,7 @@
     <!-- SS MONOGRAM (CENTER OVERLAY) -->
     <div class="ss-overlay">
   <img src="SS-only.png" class="ss-base" alt="S &amp; S monogram">
-  <img src="amp.svg" class="amp-draw" alt="&">
+  <img src="amp.svg" id="amp" class="amp-draw" alt="&">
 </div>
 
 
@@ -238,3 +238,11 @@
 
 </body>
 </html>
+<script>
+  // Force amp.svg to reload so animation always restarts
+  const amp = document.getElementById("amp");
+  if (amp) {
+    const src = amp.getAttribute("src");
+    amp.setAttribute("src", src + "?v=" + Date.now());
+  }
+</script>
