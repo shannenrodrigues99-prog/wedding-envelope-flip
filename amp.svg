@@ -11,7 +11,7 @@
       /* Draw animation */
       stroke-dasharray: 2600;
       stroke-dashoffset: 2600;
-      animation: drawAmp 4.5s ease-out forwards;
+      animation: drawAmp 5.0s ease-out forwards;
     }
 
     @keyframes drawAmp {
