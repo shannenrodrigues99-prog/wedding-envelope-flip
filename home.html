@@ -95,10 +95,10 @@
       height: 100%;
       width: 100%;
       overflow: hidden;
-      position: relative; /* IMPORTANT for overlay positioning */
+      position: relative;
     }
 
-    /* ===== SS OVERLAY (fixed on top) ===== */
+    /* ===== SS OVERLAY ===== */
     .ss-overlay{
       position: absolute;
       top: 50%;
@@ -114,7 +114,7 @@
       display: block;
     }
 
-    /* ===== LOOPING TRACK ===== */
+    /* ===== MOVING TRACK ===== */
     .track{
       display: flex;
       height: 100%;
@@ -129,7 +129,7 @@
       to   { transform: translateX(-50%); }
     }
 
-    /* ===== PANELS (variety) ===== */
+    /* ===== PANELS ===== */
     .panel{
       height: 100%;
       flex: 0 0 auto;
@@ -190,9 +190,9 @@
   <section class="marquee-area">
     <div class="marquee">
 
-      <!-- SS OVERLAY (stays still on top of moving photos) -->
+      <!-- SS OVERLAY -->
       <div class="ss-overlay">
-        <img src="ss-only.png" alt="S & S monogram">
+        <img src="SS-only.png" alt="S & S monogram">
       </div>
 
       <!-- MOVING PHOTOS -->
@@ -206,7 +206,7 @@
         <div class="panel xxwide"><img src="photo5.jpg" alt=""></div>
         <div class="panel narrow"><img src="photo6.jpg" alt=""></div>
 
-        <!-- DUPLICATE SET (must match order + classes) -->
+        <!-- DUPLICATE SET -->
         <div class="panel wide"><img src="photo1.jpg" alt=""></div>
         <div class="panel narrow"><img src="photo2.jpg" alt=""></div>
         <div class="panel xwide"><img src="photo3.jpg" alt=""></div>
