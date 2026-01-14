@@ -1,158 +1,132 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Shannen & Samarth</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+<title>Shannen & Samarth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Alex Brush -->
-  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
+<!-- Alex Brush -->
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
 
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+<style>
+* { box-sizing: border-box; }
 
-    :root{
-      --bg: #ffffff;
-      --text: #2e2e2e;
-      --muted: rgba(0,0,0,.65);
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #fafafa;
+  color: #2e2e2e;
+  font-family: Georgia, serif;
+}
 
-      --headerTop: 28px;
-      --headerBottom: 6px;
+/* ===== HEADER ===== */
+header {
+  text-align: center;
+  padding: 36px 16px 28px;
+}
 
-      --marqueeTopGap: 20px;
-      --speed: 55s;
-    }
+.names {
+  font-family: 'Alex Brush', cursive;
+  font-size: 52px;
+}
 
-    html, body{
-      height: 100vh;
-      overflow: hidden; /* 🔒 no scrolling */
-      background: var(--bg);
-      color: var(--text);
-      font-family: Georgia, serif;
-    }
+.countdown {
+  margin-top: 10px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  opacity: 0.7;
+}
 
-    body{
-      display: flex;
-      flex-direction: column;
-    }
+nav {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 26px;
+}
 
-    /* ===== HEADER ===== */
-    header{
-      text-align: center;
-      padding: var(--headerTop) 16px var(--headerBottom);
-      background: var(--bg);
-      flex: 0 0 auto;
-    }
+nav a {
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: #2e2e2e;
+  padding-bottom: 4px;
+  border-bottom: 1px solid transparent;
+}
 
-    .names{
-      font-family: "Alex Brush", cursive;
-      font-size: clamp(44px, 6vw, 60px);
-      line-height: 1;
-    }
+nav a:hover {
+  border-bottom-color: #2e2e2e;
+}
 
-    .countdown{
-      margin-top: 10px;
-      font-size: 13px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      min-height: 18px;
-    }
+/* ===== MONOGRAM OVERLAY ===== */
+.monogram {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 5;
+}
 
-    nav{
-      margin-top: 18px;
-      display: flex;
-      justify-content: center;
-      gap: 26px;
-      flex-wrap: wrap;
-      font-size: 14px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
+.mono-box {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
 
-    nav a{
-      color: var(--text);
-      text-decoration: none;
-      padding-bottom: 6px;
-      border-bottom: 2px solid transparent;
-    }
+.mono-ss {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+}
 
-    nav a:hover,
-    nav a.active{
-      border-bottom-color: var(--text);
-    }
+.mono-amp {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+  width: 42%;
+  z-index: 2;
+}
 
-    /* ===== MARQUEE AREA ===== */
-    .marquee-area{
-      flex: 1;                 /* 🔑 fills remaining height */
-      padding-top: var(--marqueeTopGap);
-      overflow: hidden;
-    }
+/* ===== MARQUEE ===== */
+.marquee-wrapper {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: calc(100vh - 220px);
+  overflow: hidden;
+}
 
-    .marquee{
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-    }
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: scroll 38s linear infinite;
+}
 
-    /* ===== SS OVERLAY ===== */
-    .ss-overlay{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 5;
-      pointer-events: none;
-    }
+.marquee img {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+}
 
-    .ss-overlay img{
-      width: 180px;
-      height: auto;
-      display: block;
-    }
+/* No gaps */
+.marquee img { margin: 0; padding: 0; }
 
-    /* ===== MOVING TRACK ===== */
-    .track{
-      display: flex;
-      height: 100%;
-      width: max-content;
-      animation: marquee var(--speed) linear infinite;
-    }
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
 
-    @keyframes marquee{
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    /* ===== PHOTO PANELS (5×7) ===== */
-    .panel{
-      height: 100%;
-      aspect-ratio: 5 / 7;
-      flex: 0 0 auto;
-      overflow: hidden;
-    }
-
-    .panel img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* ===== MOBILE ===== */
-    @media (max-width: 700px){
-      :root{
-        --headerTop: 24px;
-        --headerBottom: 4px;
-        --marqueeTopGap: 14px;
-        --speed: 70s;
-      }
-
-      .ss-overlay img{
-        width: 140px;
-      }
-    }
-  </style>
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  .names { font-size: 42px; }
+  .mono-box { width: 220px; height: 220px; }
+}
+</style>
 </head>
 
 <body>
@@ -162,62 +136,79 @@
   <div id="countdown" class="countdown"></div>
 
   <nav>
-    <a class="active" href="home.html">Home</a>
+    <a href="home.html">Home</a>
     <a href="schedule.html">Schedule</a>
-    <a href="rsvp.html">RSVP</a>
-    <a href="faqs.html">FAQs</a>
+    <a href="https://YOUR-RSVP-LINK">RSVP</a>
+    <a href="https://YOUR-FAQ-LINK">FAQs</a>
   </nav>
 </header>
 
-<section class="marquee-area">
-  <div class="marquee">
-
-    <!-- SS MONOGRAM -->
-    <div class="ss-overlay">
-      <img src="SS-only.png" alt="S & S monogram">
-    </div>
-
-    <!-- MOVING PHOTOS -->
-    <div class="track">
-      <div class="panel"><img src="photo1.jpg"></div>
-      <div class="panel"><img src="photo2.jpg"></div>
-      <div class="panel"><img src="photo3.jpg"></div>
-      <div class="panel"><img src="photo4.jpg"></div>
-      <div class="panel"><img src="photo5.jpg"></div>
-      <div class="panel"><img src="photo6.jpg"></div>
-
-      <!-- DUPLICATE FOR LOOP -->
-      <div class="panel"><img src="photo1.jpg"></div>
-      <div class="panel"><img src="photo2.jpg"></div>
-      <div class="panel"><img src="photo3.jpg"></div>
-      <div class="panel"><img src="photo4.jpg"></div>
-      <div class="panel"><img src="photo5.jpg"></div>
-      <div class="panel"><img src="photo6.jpg"></div>
-    </div>
+<!-- Monogram -->
+<div class="monogram">
+  <div class="mono-box">
+    <img src="SS-only.png" class="mono-ss" alt="S S">
+    <object id="ampObj" class="mono-amp" data="amp.svg" type="image/svg+xml"></object>
   </div>
-</section>
+</div>
 
-<!-- COUNTDOWN -->
+<!-- Marquee -->
+<div class="marquee-wrapper">
+  <div class="marquee">
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+    <img src="photo3.jpg">
+    <img src="photo4.jpg">
+    <!-- duplicate for seamless loop -->
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+    <img src="photo3.jpg">
+    <img src="photo4.jpg">
+  </div>
+</div>
+
+<!-- Countdown -->
 <script>
-  const weddingDate = new Date("2027-02-27T15:00:00+08:00");
-  const el = document.getElementById("countdown");
+const weddingDate = new Date("2027-02-27T15:00:00+08:00");
+const el = document.getElementById("countdown");
 
-  function pad(n){ return String(n).padStart(2,"0"); }
-
-  function tick(){
-    const diff = weddingDate - new Date();
-    if (diff <= 0){ el.textContent = "TODAY 🤍"; return; }
-
-    const s = Math.floor(diff / 1000);
-    const d = Math.floor(s / 86400);
-    const h = Math.floor((s % 86400) / 3600);
-    const m = Math.floor((s % 3600) / 60);
-
-    el.textContent = `${d} DAYS • ${pad(h)} HOURS • ${pad(m)} MINUTES`;
+function updateCountdown(){
+  const diff = weddingDate - new Date();
+  if (diff <= 0) {
+    el.textContent = "TODAY 🤍";
+    return;
   }
+  const s = Math.floor(diff / 1000);
+  const d = Math.floor(s / 86400);
+  const h = Math.floor((s % 86400) / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  el.textContent = `${d} DAYS • ${h} HOURS • ${m} MINUTES`;
+}
+updateCountdown();
+setInterval(updateCountdown, 60000);
+</script>
 
-  tick();
-  setInterval(tick, 1000);
+<!-- Ampersand draw animation -->
+<script>
+const ampObj = document.getElementById("ampObj");
+
+ampObj.addEventListener("load", () => {
+  const svg = ampObj.contentDocument;
+  const path = svg.querySelector("path");
+  if (!path) return;
+
+  path.setAttribute("fill", "none");
+  path.setAttribute("stroke", "#ffffff");
+  path.setAttribute("stroke-width", "3");
+  path.setAttribute("stroke-linecap", "round");
+  path.setAttribute("stroke-linejoin", "round");
+
+  const len = path.getTotalLength();
+  path.style.strokeDasharray = len;
+  path.style.strokeDashoffset = len;
+  path.getBoundingClientRect();
+  path.style.transition = "stroke-dashoffset 1.6s ease";
+  path.style.strokeDashoffset = "0";
+});
 </script>
 
 </body>
