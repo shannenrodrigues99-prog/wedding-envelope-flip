@@ -279,23 +279,6 @@
     tick();
     setInterval(tick, 1000);
 
-    /* OPTIONAL: if you want to inline-load amp.svg later (for stroke animation)
-       - Keep amp.svg in the SAME folder as home.html
-       - Then uncomment the block below and set .overlay-amp display:flex;
-    */
-
-    // (async function loadAmp(){
-    //   try{
-    //     const res = await fetch("amp.svg");
-    //     const text = await res.text();
-    //     // Grab the first <path ...> from amp.svg and inject it
-    //     const match = text.match(/<path[^>]*>(?:.|\\n|\\r)*?<\\/path>|<path[^>]*\\/>/i);
-    //     if (!match) return;
-    //     document.getElementById("ampInline").outerHTML = match[0];
-    //   }catch(e){
-    //     console.warn("amp.svg not loaded:", e);
-    //   }
-    // })();
   </script>
 </body>
 </html>
