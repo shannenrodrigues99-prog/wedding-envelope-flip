@@ -83,13 +83,15 @@ nav a:hover {
   z-index: 1;
 }
 
-.mono-amp {
+.mono-amp{
   position: absolute;
   left: 50%;
   top: 52%;
   transform: translate(-50%, -50%);
   width: 42%;
+  height: 42%;   /* ✅ ADD THIS */
   z-index: 2;
+  display: block; /* ✅ ADD THIS */
 }
 
 /* ===== MARQUEE ===== */
@@ -197,7 +199,8 @@ ampObj.addEventListener("load", () => {
   if (!path) return;
 
   path.setAttribute("fill", "none");
-  path.setAttribute("stroke", "#ffffff");
+ path.setAttribute("stroke", "red");
+path.setAttribute("stroke-width", "6");
   path.setAttribute("stroke-width", "3");
   path.setAttribute("stroke-linecap", "round");
   path.setAttribute("stroke-linejoin", "round");
