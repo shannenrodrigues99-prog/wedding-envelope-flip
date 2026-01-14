@@ -16,8 +16,10 @@
       --text: #2e2e2e;
       --muted: rgba(0,0,0,.65);
 
-      --headerTop: 56px;
-      --headerBottom: 18px;
+      /* ↓ REDUCED HEADER SPACING */
+      --headerTop: 36px;
+      --headerBottom: 10px;
+
       --marqueeTopGap: 22px;
       --pageBottomGap: 14px;
       --speed: 55s;
@@ -129,7 +131,7 @@
       to   { transform: translateX(-50%); }
     }
 
-    /* ===== PANELS ===== */
+    /* ===== PANELS (VARIETY) ===== */
     .panel{
       height: 100%;
       flex: 0 0 auto;
@@ -152,7 +154,8 @@
     /* ===== MOBILE ===== */
     @media (max-width: 700px){
       :root{
-        --headerTop: 44px;
+        --headerTop: 30px;
+        --headerBottom: 8px;
         --marqueeTopGap: 16px;
         --pageBottomGap: 10px;
         --speed: 70s;
