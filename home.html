@@ -5,199 +5,159 @@
   <title>Shannen & Samarth</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
 
   <style>
     * { box-sizing: border-box; }
 
-    :root{
-      --bg: #ffffff;     /* whiter background */
-      --text: #2e2e2e;
-      --muted: rgba(46,46,46,.72);
-      --gapTop: 28px;    /* smaller top spacing */
-      --gapBottom: 18px; /* smaller bottom spacing */
-      --marqueeTopGap: 18px;
-      --marqueeBottomGap: 18px;
-    }
-
+    html, body { height: 100%; }              /* ✅ IMPORTANT */
     body{
       margin:0;
-      background: var(--bg);
-      color: var(--text);
+      background:#ffffff;
+      color:#2e2e2e;
       font-family: Georgia, serif;
-      overflow: hidden; /* one screen, no scroll */
+      overflow:hidden;                         /* ✅ one screen, no scroll */
     }
 
-    /* Whole page layout: header + marquee fill the rest */
+    /* Whole page = header + marquee area */
     .page{
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      height:100vh;                            /* ✅ IMPORTANT */
+      display:flex;
+      flex-direction:column;
     }
 
     header{
       text-align:center;
-      padding: var(--gapTop) 16px 0;
+      padding: 18px 16px 0;
       flex: 0 0 auto;
     }
 
     .names{
-      font-family: "Alex Brush", cursive;
-      font-size: 56px;
-      line-height: 1;
-      margin: 0;
+      font-family:"Alex Brush", cursive;
+      font-size:56px;
+      line-height:1;
+      margin:0;
     }
 
-    /* Countdown should NOT "pop in" late */
     .countdown{
       margin-top: 10px;
       font-size: 14px;
-      letter-spacing: 0.14em;
-      color: var(--muted);
-      min-height: 18px; /* reserves space so it never jumps */
+      letter-spacing: .14em;
+      opacity: .75;
+      min-height: 18px; /* stops pop-in */
     }
 
     nav{
-      margin-top: 18px;
+      margin-top: 14px;
       display:flex;
       justify-content:center;
       gap: 26px;
-      flex-wrap: wrap;
+      flex-wrap:wrap;
       padding-bottom: 10px;
     }
 
     nav a{
       text-decoration:none;
-      color: var(--text);
-      font-size: 14px;
-      letter-spacing: 0.12em;
-      padding-bottom: 6px;
-      border-bottom: 2px solid transparent;
+      color:#2e2e2e;
+      font-size:14px;
+      letter-spacing:.12em;
+      padding-bottom:6px;
+      border-bottom:2px solid transparent;
     }
 
-    nav a.active{
-      border-bottom-color: var(--text);
-    }
+    nav a.active{ border-bottom-color:#2e2e2e; }
 
-    /* Marquee area fills remaining height */
+    /* ✅ This MUST be flexible height */
     main{
-      flex: 1 1 auto;
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-      padding: var(--marqueeTopGap) 0 var(--gapBottom);
-      min-height: 0; /* important for flex children */
+      flex: 1 1 auto;                          /* ✅ IMPORTANT */
+      min-height: 0;                           /* ✅ IMPORTANT (Chrome flex fix) */
+      padding: 14px 0 14px;                    /* space above & below marquee */
+      display:flex;
     }
 
     .marqueeWrap{
-      position: relative;
-      width: 100vw;        /* full screen width, no rounded edges */
-      height: 100%;
-      overflow: hidden;
-      background: #fff;
+      flex:1;                                  /* ✅ IMPORTANT */
+      width:100%;
+      height:100%;                             /* ✅ IMPORTANT */
+      overflow:hidden;
+      position:relative;
+      background:#ffffff;
     }
 
-    /* Overlay monogram image on top of the moving photos */
+    /* SS overlay */
     .overlay-monogram{
       position:absolute;
-      inset: 0;
+      inset:0;
       display:flex;
       align-items:center;
       justify-content:center;
       pointer-events:none;
-      z-index: 5;
+      z-index:5;
     }
 
     .overlay-monogram img{
-      width: min(52vw, 520px);
-      max-width: 520px;
-      height: auto;
-      opacity: 0.95;
+      width:min(52vw, 520px);
+      height:auto;
+      opacity:.95;
     }
 
-    /* Optional: amp SVG overlay on top of SS-only.png (hidden until you want it)
-       If you want it ON, set display:block below. */
-    .overlay-amp{
-      position:absolute;
-      inset: 0;
-      display:none; /* change to flex when you’re ready */
-      align-items:center;
-      justify-content:center;
-      pointer-events:none;
-      z-index: 6;
-    }
-
-    .overlay-amp svg{
-      width: min(16vw, 160px);
-      height: auto;
-      overflow: visible;
-    }
-
-    /* === Marquee animation === */
+    /* marquee track */
     .track{
       position:absolute;
-      top:0; left:0; right:0; bottom:0;
+      inset:0;
       display:flex;
-      width: max-content;
+      width:max-content;
+      animation: scroll 22s linear infinite;
       will-change: transform;
-      animation: scroll 28s linear infinite;
     }
 
     @keyframes scroll{
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
+      from{ transform: translateX(0); }
+      to{ transform: translateX(-50%); }
     }
 
-    /* A "set" of tiles, duplicated twice for seamless loop */
     .set{
       display:flex;
-      gap: 0; /* NO gaps between photos */
+      gap:0;                                   /* ✅ no gaps */
+      height:100%;
     }
 
-    /* Each tile = 5x7-ish ratio (portrait) */
+    /* Tiles: portrait-ish + variety */
     .tile{
-      height: 100%;
-      width: calc((100vh - 170px) * (5/7)); /* rough 5x7 ratio based on visible height */
-      max-width: 420px;
-      min-width: 220px;
+      height:100%;
+      width: clamp(220px, 26vw, 520px);
       overflow:hidden;
-      position: relative;
-      background: #e9e9e9;
+      position:relative;
+      background:#e9e9e9;
     }
+
+    .tile.wide{ width: clamp(280px, 32vw, 640px); }
+    .tile.narrow{ width: clamp(180px, 20vw, 420px); }
 
     .tile img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* fills tile nicely */
+      width:100%;
+      height:100%;
+      object-fit: cover;
       display:block;
     }
 
-    /* Make some tiles different shapes/sizes (variety like Zola) */
-    .tile.wide{
-      width: calc(((100vh - 170px) * (5/7)) * 1.25);
-    }
-    .tile.tall{
-      width: calc(((100vh - 170px) * (5/7)) * 0.9);
-    }
-
-    /* Responsive tweaks */
-    @media (max-width: 700px){
-      .names{ font-size: 44px; }
-      nav{ gap: 18px; margin-top: 14px; }
-      .overlay-monogram img{ width: min(70vw, 420px); }
+    /* If images not uploaded yet, show a nice placeholder */
+    .ph{
+      width:100%;
+      height:100%;
+      background: linear-gradient(135deg, #ddd, #f3f3f3);
     }
 
-    @media (max-height: 700px){
-      :root{ --gapTop: 18px; --gapBottom: 12px; --marqueeTopGap: 12px; }
-      .names{ font-size: 44px; }
+    @media (max-width:700px){
+      .names{ font-size:44px; }
+      nav{ gap:18px; }
+      .overlay-monogram img{ width:min(70vw, 420px); }
     }
   </style>
 </head>
 
 <body>
   <div class="page">
-
     <header>
       <div class="names">Shannen &amp; Samarth</div>
       <div id="countdown" class="countdown">—</div>
@@ -213,49 +173,44 @@
     <main>
       <div class="marqueeWrap">
 
-        <!-- SS monogram overlay (your file name is case-sensitive) -->
+        <!-- Overlay monogram -->
         <div class="overlay-monogram">
-          <img src="SS-only.png" alt="S & S monogram" />
+          <img src="SS-only.png" alt="S & S monogram">
         </div>
 
-        <!-- OPTIONAL amp.svg overlay (turn on when ready)
-             If you want it: set .overlay-amp display:flex; in CSS -->
-        <div class="overlay-amp" aria-hidden="true">
-          <!-- Inline SVG loader: pulls your amp.svg and injects it so animation can work later -->
-          <svg id="ampInline" viewBox="0 0 1026 1024" xmlns="http://www.w3.org/2000/svg"></svg>
-        </div>
-
-        <!-- Moving photos: duplicate the same "set" twice for a seamless loop -->
+        <!-- Marquee -->
         <div class="track" aria-hidden="true">
           <div class="set">
-            <!-- Replace these image filenames with your real ones.
-                 Keep them in the repo root next to home.html -->
+            <!-- OPTION A: placeholders until you add photos -->
+            <div class="tile"><div class="ph"></div></div>
+            <div class="tile wide"><div class="ph"></div></div>
+            <div class="tile"><div class="ph"></div></div>
+            <div class="tile narrow"><div class="ph"></div></div>
+            <div class="tile"><div class="ph"></div></div>
+            <div class="tile wide"><div class="ph"></div></div>
+
+            <!-- OPTION B: when you have photos, replace placeholders like this:
             <div class="tile"><img src="photo1.jpg" alt=""></div>
-            <div class="tile wide"><img src="photo2.jpg" alt=""></div>
-            <div class="tile"><img src="photo3.jpg" alt=""></div>
-            <div class="tile tall"><img src="photo4.jpg" alt=""></div>
-            <div class="tile"><img src="photo5.jpg" alt=""></div>
-            <div class="tile wide"><img src="photo6.jpg" alt=""></div>
+            -->
           </div>
 
+          <!-- Duplicate set for seamless loop -->
           <div class="set">
-            <!-- duplicate same order for perfect looping -->
-            <div class="tile"><img src="photo1.jpg" alt=""></div>
-            <div class="tile wide"><img src="photo2.jpg" alt=""></div>
-            <div class="tile"><img src="photo3.jpg" alt=""></div>
-            <div class="tile tall"><img src="photo4.jpg" alt=""></div>
-            <div class="tile"><img src="photo5.jpg" alt=""></div>
-            <div class="tile wide"><img src="photo6.jpg" alt=""></div>
+            <div class="tile"><div class="ph"></div></div>
+            <div class="tile wide"><div class="ph"></div></div>
+            <div class="tile"><div class="ph"></div></div>
+            <div class="tile narrow"><div class="ph"></div></div>
+            <div class="tile"><div class="ph"></div></div>
+            <div class="tile wide"><div class="ph"></div></div>
           </div>
         </div>
 
       </div>
     </main>
-
   </div>
 
   <script>
-    /* COUNTDOWN (no delay / no jump) */
+    // Wedding date: 27 Feb 2027 (Perth time)
     const weddingDate = new Date("2027-02-27T15:00:00+08:00");
     const el = document.getElementById("countdown");
 
@@ -278,7 +233,6 @@
 
     tick();
     setInterval(tick, 1000);
-
   </script>
 </body>
 </html>
