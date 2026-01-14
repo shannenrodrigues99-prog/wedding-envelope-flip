@@ -107,13 +107,21 @@
       pointer-events: none;
     }
 
-    .ss-overlay img{
-      width: 180px;
-      height: auto;
-      display: block;
-      position: relative;
-      z-index: 1;
-    }
+   /* Base SS image */
+.ss-base{
+  width: 180px;
+  height: auto;
+  display: block;
+}
+
+/* Ampersand SVG sitting on top */
+.amp-draw{
+  position: absolute;
+  width: 95px;         /* adjust size of & */
+  height: auto;
+  z-index: 2;          /* above SS */
+}
+
 
     /* ===== MOVING TRACK ===== */
     .track{
@@ -156,10 +164,7 @@
         width: 140px;
       }
 
-      .ss-overlay::before{
-        width: 260px;
-        height: 190px;
-      }
+
     }
   </style>
 </head>
@@ -183,8 +188,10 @@
 
     <!-- SS MONOGRAM (CENTER OVERLAY) -->
     <div class="ss-overlay">
-      <img src="SS-only.png" alt="S &amp; S monogram">
-    </div>
+  <img src="SS-only.png" class="ss-base" alt="S &amp; S monogram">
+  <img src="amp.svg" class="amp-draw" alt="&">
+</div>
+
 
     <!-- MOVING PHOTOS -->
     <div class="track">
