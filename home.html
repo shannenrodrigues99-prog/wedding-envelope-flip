@@ -247,3 +247,24 @@
     amp.setAttribute("src", src + "?v=" + Date.now());
   }
 </script>
+@media (max-width: 700px){
+
+  /* SS base */
+  .ss-base{
+    width: 125px;   /* was 180 / 140 → slightly smaller on phone */
+  }
+
+  /* Ampersand */
+  .amp-draw{
+    width: 78px;    /* slightly smaller & */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateY(6px);
+  }
+
+  /* Slow the draw animation on mobile */
+  .amp-draw path{
+    animation-duration: 3.2s;
+  }
+
+}
