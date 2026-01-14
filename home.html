@@ -16,7 +16,6 @@
       --text: #2e2e2e;
       --muted: rgba(0,0,0,.65);
 
-      /* ↓ slightly tighter again */
       --headerTop: 28px;
       --headerBottom: 6px;
 
@@ -42,7 +41,6 @@
     header{
       text-align: center;
       padding: var(--headerTop) 16px var(--headerBottom);
-      flex: 0 0 auto;
       background: var(--bg);
     }
 
@@ -86,18 +84,16 @@
 
     /* ===== MARQUEE AREA ===== */
     .marquee-area{
-      flex: 1 1 auto;
+      flex: 1;
       padding-top: var(--marqueeTopGap);
       padding-bottom: var(--pageBottomGap);
       overflow: hidden;
-      background: var(--bg);
     }
 
     .marquee{
       height: 100%;
-      width: 100%;
-      overflow: hidden;
       position: relative;
+      overflow: hidden;
     }
 
     /* ===== SS OVERLAY ===== */
@@ -121,9 +117,7 @@
       display: flex;
       height: 100%;
       width: max-content;
-      will-change: transform;
       animation: marquee var(--speed) linear infinite;
-      align-items: stretch;
     }
 
     @keyframes marquee{
@@ -131,18 +125,13 @@
       to   { transform: translateX(-50%); }
     }
 
-    /* ===== PANELS (VARIETY) ===== */
+    /* ===== PHOTO PANELS (5×7) ===== */
     .panel{
       height: 100%;
+      aspect-ratio: 5 / 7;     /* ✅ KEY CHANGE */
       flex: 0 0 auto;
       overflow: hidden;
     }
-
-    .xxwide { width: 78vw; max-width: 980px; min-width: 420px; }
-    .xwide  { width: 60vw; max-width: 780px; min-width: 360px; }
-    .wide   { width: 46vw; max-width: 640px; min-width: 300px; }
-    .med    { width: 34vw; max-width: 520px; min-width: 260px; }
-    .narrow { width: 24vw; max-width: 380px; min-width: 220px; }
 
     .panel img{
       width: 100%;
@@ -161,14 +150,6 @@
         --speed: 70s;
       }
 
-      nav{ gap: 18px; }
-
-      .xxwide { width: 92vw; min-width: 0; }
-      .xwide  { width: 86vw; min-width: 0; }
-      .wide   { width: 78vw; min-width: 0; }
-      .med    { width: 70vw; min-width: 0; }
-      .narrow { width: 62vw; min-width: 0; }
-
       .ss-overlay img{
         width: 140px;
       }
@@ -178,71 +159,68 @@
 
 <body>
 
-  <header>
-    <div class="names">Shannen &amp; Samarth</div>
-    <div id="countdown" class="countdown"></div>
+<header>
+  <div class="names">Shannen &amp; Samarth</div>
+  <div id="countdown" class="countdown"></div>
 
-    <nav>
-      <a class="active" href="home.html">Home</a>
-      <a href="schedule.html">Schedule</a>
-      <a href="rsvp.html">RSVP</a>
-      <a href="faqs.html">FAQs</a>
-    </nav>
-  </header>
+  <nav>
+    <a class="active" href="home.html">Home</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="rsvp.html">RSVP</a>
+    <a href="faqs.html">FAQs</a>
+  </nav>
+</header>
 
-  <section class="marquee-area">
-    <div class="marquee">
+<section class="marquee-area">
+  <div class="marquee">
 
-      <!-- SS OVERLAY -->
-      <div class="ss-overlay">
-        <img src="SS-only.png" alt="S & S monogram">
-      </div>
-
-      <!-- MOVING PHOTOS -->
-      <div class="track">
-
-        <!-- FIRST SET -->
-        <div class="panel wide"><img src="photo1.jpg" alt=""></div>
-        <div class="panel narrow"><img src="photo2.jpg" alt=""></div>
-        <div class="panel xwide"><img src="photo3.jpg" alt=""></div>
-        <div class="panel med"><img src="photo4.jpg" alt=""></div>
-        <div class="panel xxwide"><img src="photo5.jpg" alt=""></div>
-        <div class="panel narrow"><img src="photo6.jpg" alt=""></div>
-
-        <!-- DUPLICATE SET -->
-        <div class="panel wide"><img src="photo1.jpg" alt=""></div>
-        <div class="panel narrow"><img src="photo2.jpg" alt=""></div>
-        <div class="panel xwide"><img src="photo3.jpg" alt=""></div>
-        <div class="panel med"><img src="photo4.jpg" alt=""></div>
-        <div class="panel xxwide"><img src="photo5.jpg" alt=""></div>
-        <div class="panel narrow"><img src="photo6.jpg" alt=""></div>
-
-      </div>
+    <!-- SS MONOGRAM -->
+    <div class="ss-overlay">
+      <img src="SS-only.png" alt="S & S monogram">
     </div>
-  </section>
 
-  <!-- COUNTDOWN -->
-  <script>
-    const weddingDate = new Date("2027-02-27T15:00:00+08:00");
-    const el = document.getElementById("countdown");
+    <!-- MOVING PHOTOS -->
+    <div class="track">
+      <div class="panel"><img src="photo1.jpg"></div>
+      <div class="panel"><img src="photo2.jpg"></div>
+      <div class="panel"><img src="photo3.jpg"></div>
+      <div class="panel"><img src="photo4.jpg"></div>
+      <div class="panel"><img src="photo5.jpg"></div>
+      <div class="panel"><img src="photo6.jpg"></div>
 
-    function pad(n){ return String(n).padStart(2, "0"); }
+      <!-- DUPLICATE FOR LOOP -->
+      <div class="panel"><img src="photo1.jpg"></div>
+      <div class="panel"><img src="photo2.jpg"></div>
+      <div class="panel"><img src="photo3.jpg"></div>
+      <div class="panel"><img src="photo4.jpg"></div>
+      <div class="panel"><img src="photo5.jpg"></div>
+      <div class="panel"><img src="photo6.jpg"></div>
+    </div>
+  </div>
+</section>
 
-    function tick(){
-      const diff = weddingDate - new Date();
-      if (diff <= 0) { el.textContent = "TODAY 🤍"; return; }
+<!-- COUNTDOWN -->
+<script>
+  const weddingDate = new Date("2027-02-27T15:00:00+08:00");
+  const el = document.getElementById("countdown");
 
-      const s = Math.floor(diff / 1000);
-      const days = Math.floor(s / 86400);
-      const hours = Math.floor((s % 86400) / 3600);
-      const mins = Math.floor((s % 3600) / 60);
+  function pad(n){ return String(n).padStart(2,"0"); }
 
-      el.textContent = `${days} DAYS • ${pad(hours)} HOURS • ${pad(mins)} MINUTES`;
-    }
+  function tick(){
+    const diff = weddingDate - new Date();
+    if (diff <= 0){ el.textContent = "TODAY 🤍"; return; }
 
-    tick();
-    setInterval(tick, 1000);
-  </script>
+    const s = Math.floor(diff / 1000);
+    const d = Math.floor(s / 86400);
+    const h = Math.floor((s % 86400) / 3600);
+    const m = Math.floor((s % 3600) / 60);
+
+    el.textContent = `${d} DAYS • ${pad(h)} HOURS • ${pad(m)} MINUTES`;
+  }
+
+  tick();
+  setInterval(tick, 1000);
+</script>
 
 </body>
 </html>
