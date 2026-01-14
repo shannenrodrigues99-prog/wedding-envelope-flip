@@ -107,22 +107,26 @@
       pointer-events: none;
     }
 
-   /* Base SS image */
-.ss-base{
-  width: 180px;
-  height: auto;
-  display: block;
-}
+    /* Base SS image */
+    .ss-base{
+      width: 180px;
+      height: auto;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
 
-/* Ampersand SVG sitting on top */
-.amp-draw{
-  position: absolute;
-  width: 95px;
-  height: auto;
-  z-index: 2;
-  transform: translateY(5px);
-}
-
+    /* Amp SVG overlay */
+    .amp-draw{
+      position: absolute;
+      width: 95px;             /* size of the & */
+      height: auto;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) translateY(0px); /* adjust Y to move up/down */
+      z-index: 2;
+      pointer-events: none;
+    }
 
     /* ===== MOVING TRACK ===== */
     .track{
@@ -152,7 +156,7 @@
       display: block;
     }
 
-    /* ===== MOBILE ===== */
+    /* ===== MOBILE (original tweaks you had) ===== */
     @media (max-width: 700px){
       :root{
         --headerTop: 24px;
@@ -160,12 +164,26 @@
         --marqueeTopGap: 14px;
         --speed: 70s;
       }
+    }
 
-      .ss-overlay img{
-        width: 140px;
+    /* ===== MOBILE: SS + AMP ONLY (NEW) ===== */
+    @media (max-width: 700px){
+
+      .ss-base{
+        width: 125px; /* smaller SS on phone */
       }
 
+      .amp-draw{
+        width: 78px; /* smaller & on phone */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) translateY(6px); /* lower slightly */
+      }
 
+      /* slow the draw animation (only if amp.svg uses stroke-dash animation on its path) */
+      .amp-draw path{
+        animation-duration: 3.2s;
+      }
     }
   </style>
 </head>
@@ -187,12 +205,11 @@
 <section class="marquee-area">
   <div class="marquee">
 
-    <!-- SS MONOGRAM (CENTER OVERLAY) -->
+    <!-- SS + AMP OVERLAY -->
     <div class="ss-overlay">
-  <img src="SS-only.png" class="ss-base" alt="S &amp; S monogram">
-  <img src="amp.svg" id="amp" class="amp-draw" alt="&">
-</div>
-
+      <img src="SS-only.png" class="ss-base" alt="S &amp; S monogram">
+      <img src="amp.svg" class="amp-draw" alt="&">
+    </div>
 
     <!-- MOVING PHOTOS -->
     <div class="track">
@@ -239,32 +256,3 @@
 
 </body>
 </html>
-<script>
-  // Force amp.svg to reload so animation always restarts
-  const amp = document.getElementById("amp");
-  if (amp) {
-    const src = amp.getAttribute("src");
-    amp.setAttribute("src", src + "?v=" + Date.now());
-  }
-</script>
-@media (max-width: 700px){
-
-  /* SS base */
-  .ss-base{
-    width: 125px;   /* was 180 / 140 → slightly smaller on phone */
-  }
-
-  /* Ampersand */
-  .amp-draw{
-    width: 78px;    /* slightly smaller & */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) translateY(6px);
-  }
-
-  /* Slow the draw animation on mobile */
-  .amp-draw path{
-    animation-duration: 3.2s;
-  }
-
-}
